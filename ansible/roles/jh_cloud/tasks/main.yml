@@ -1,0 +1,79 @@
+---
+
+- name: Install packages (fuse)
+  when: cloud_type | length > 0
+  ansible.builtin.apt:
+    force_apt_get: true
+    state: latest
+    name:
+      - fuse
+
+- name: Install packages (rclone)
+  when: cloud_type | length > 0
+  ansible.builtin.apt:
+    force_apt_get: true
+    default_release: testing
+    state: latest
+    name:
+      - rclone
+
+- name: "Config file"
+  block:
+    - name: "Install config ({{ cloud_type }})"
+      when: cloud_type | length > 0
+      ansible.builtin.template:
+        src: "{{ cloud_type }}.conf"
+        dest: /etc/jehon/rclone.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: jh_cloud.remount
+    ## ELSE ##
+    - name: "Remove config"
+      when: cloud_type | length == 0
+      ansible.builtin.file:
+        dest: /etc/jehon/rclone.conf
+        state: absent
+      notify: jh_cloud.remount
+
+- name: Configure mount
+  block:
+    - name: Create dir
+      with_items: "{{ mount_list }}"
+      ansible.builtin.file:
+        state: directory
+        dest: /etc/systemd/system/mnt-cloud-{{ item | lower }}.mount.d/
+        mode: "0755"
+
+    - name: Install override
+      when: cloud_cache_size or (mode != 'ro')
+      with_items: "{{ mount_list }}"
+      vars:
+        mode: "{{ cloud_mount[item] | default('ro') }}"
+      ansible.builtin.template:
+        src: service-override.mount
+        dest: /etc/systemd/system/mnt-cloud-{{ item | lower }}.mount.d/ansible.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: jh_cloud.remount
+    ## ELSE ##
+    - name: "Remove override"
+      when: not (cloud_cache_size or (mode != 'ro'))
+      with_items: "{{ mount_list }}"
+      vars:
+        mode: "{{ cloud_mount[item] | default('ro') }}"
+      ansible.builtin.file:
+        dest: /etc/system/systemd/mnt-cloud{{ item | lower }}.d/ansible.override
+        state: absent
+      notify: jh_cloud.remount
+
+- name: Enable service
+  when: jh_is_full_machine
+  with_items: "{{ mount_list }}"
+  vars:
+    start: "{{ (cloud_mount is defined) and (cloud_mount[item] is defined) and (cloud_mount[item] != '') }}"
+  ansible.builtin.systemd:
+    name: mnt-cloud-{{ item | lower }}.mount
+    enabled: "{{ start }}"
+    state: "{{ 'started' if start else 'stopped' }}"

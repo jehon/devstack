@@ -1,0 +1,14 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<slave>
+  <name>agent_basic</name>
+  <description></description>
+  <remoteFS>/home/jenkins/agent</remoteFS>
+  <numExecutors>1</numExecutors>
+  <mode>NORMAL</mode>
+  <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
+  <launcher class="hudson.slaves.CommandLauncher" plugin="command-launcher@1.6">
+    <agentCommand>docker run -i --rm --name jenkins_agent_basic --init jenkins/agent java -jar /usr/share/jenkins/agent.jar</agentCommand>
+  </launcher>
+  <label></label>
+  <nodeProperties/>
+</slave>

@@ -1,0 +1,12 @@
+---
+
+argument_specs:
+  main:
+    options:
+      path:
+        type: string
+        required: true
+      url:
+        type: string
+      version:
+        type: string

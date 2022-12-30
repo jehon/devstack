@@ -1,0 +1,86 @@
+#
+# See https://hub.docker.com/u/jenkins
+# - https://hub.docker.com/r/jenkins/jenkins
+# - https://hub.docker.com/r/jenkins/jnlp-slave
+# - https://hub.docker.com/r/jenkins/jnlp-agent-docker
+# - https://stackoverflow.com/a/39150040/1954789 (stdin / tty)
+#
+# Thanks to https://gist.github.com/pythoninthegrass/abb755a54ba908374e1c8bfd79d0c499
+
+version: "3.8"
+
+#volumes:
+    # sonar_data:
+    # sonar_extensions:
+
+services:
+    # apache:
+    #     build:
+    #         context: apache
+    #         dockerfile: Dockerfile
+    #     volumes:
+    #         - ./apache/webroot:/usr/local/apache2/htdocs:ro
+    #     ports:
+    #         - 127.0.0.1:9000:80
+
+    jenkins-master:
+        # https://github.com/jenkinsci/docker/blob/master/README.md
+        # https://hub.docker.com/r/jenkins/jenkins
+        depends_on: 
+            - apache
+        build:
+            context: jenkins-master
+            dockerfile: Dockerfile
+        user: root
+        privileged: true
+        command: --prefix=/jenkins
+        volumes:
+            - jh_secrets:/jh_secrets
+            - /var/run/docker.sock:/var/run/docker.sock
+        expose:
+            - 50000
+            - 8080
+
+    # jenkins_agent_1:
+    #     # https://hub.docker.com/r/jenkins/inbound-agent
+    #     # https://hub.docker.com/r/jenkins/jnlp-agent-docker
+    #     profiles: [ "manual" ]
+    #     image: jenkins/jnlp-agent-node
+    #     privileged: true
+    #     environment:
+    #         JENKINS_URL: http://jenkins-master:50000
+    #         JENKINS_AGENT_NAME: agent_1
+    #     volumes:
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #     command: 
+    #     # docker run -i --rm --name jenkins_agent_basic --init jenkins/agent java -jar /usr/share/jenkins/agent.jar
+    #     # stdin_open: true # docker run -i
+    #     # tty: true        # docker run -t
+    #     # user: root
+    #     # entrypoint: java
+    #     # command: jenkins/jnlp-agent-docker -jar /usr/share/jenkins/agent.jar
+
+    portainer:
+        profiles: [ "manual" ]
+        image: portainer/portainer-ce:latest
+        # Need to escape all '$' into '$$'
+        command: --admin-password='$$2y$$05$$s5BtawHyEHa1fYr9gfeYNOZd8/JAPeAUVfmFlvjGJpNVasmbulNEe'
+        privileged: true
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        expose:
+            - 9000
+
+    # sonar:
+    #     build:
+    #         context: .
+    #         dockerfile: sonar/Dockerfile
+    ##     volumes:
+    ##         - sonar_data:/opt/sonarqube/data
+    ##         - sonar_extensions:/opt/sonarqube/extensions
+    #     environment:
+    #         SONAR_WEB_CONTEXT: "/sonar"
+    #         # SONAR_WEB_PORT: 9080
+    #         SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: 1
+    #     expose:
+    #         - 9000

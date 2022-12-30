@@ -1,0 +1,58 @@
+---
+
+- name: Calculate os name ({{ ansible_distribution }})
+  when: jehon_os_package is not defined
+  ansible.builtin.set_fact:
+    jehon_os_package: "jehon-os-{{ ansible_distribution | lower }}"
+
+- name: Install ok
+  block:
+    - name: "Install os package: {{ jehon_os_package }}"
+      when: jehon_os_package | length > 0
+      ansible.builtin.apt:
+        state: latest
+        pkg:
+          - "{{ jehon_os_package }}"
+      register: jh_os_installed
+
+    - name: Refresh indexes
+      when: jh_os_installed.changed
+      ansible.builtin.apt:
+        update_cache: true
+
+- name: Setup pcloud
+  ansible.builtin.include_role:
+    name: jh_cloud
+
+- name: Setup display
+  ansible.builtin.include_role:
+    name: jh_display
+  when: display_localhost_port is defined
+
+- name: In full machine
+  when: jh_is_full_machine
+  block:
+    - name: Set a hostname to {{ inventory_hostname }}
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+      when: inventory_hostname is match("[a-zA-Z][a-zA-Z0-9_-]+") and inventory_hostname != "localhost"
+
+    - name: Firewall - allow ssh
+      community.general.ufw:
+        rule: allow
+        name: ssh
+
+    - name: Firewall - enable
+      community.general.ufw:
+        state: enabled
+
+    - name: Add IP address to hosts
+      ansible.builtin.lineinfile:
+        dest: /etc/hosts
+        regexp: '.* {{ item }} .* # ansible'
+        # TODO: remove hostnames alias without .honlet (!!update regexp!!)
+        line: "{{ jehon.ip[item] }} {{ item }}.honlet {{ item }} # ansible"
+        state: present
+      when: jehon.ip[item] is defined
+      with_items: "{{ jehon.ip.keys() }}"
+      # On docker, the /etc/hosts is not writable

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -o errexit
+
+# shellcheck source=SCRIPTDIR/../../jehon/usr/bin/jh-lib
+. jh-lib
+
+ROOT="$(dirname "$JH_SWD")"
+
+pushd "$ROOT" >/dev/null || exit 255
+
+JENKINS_IMG="jenkins-master"
+JENKINS_CTX="$ROOT/server/jenkins-master"
+
+header_begin "Sending latest version of backup"
+(cd server && docker compose cp "$JENKINS_CTX"/jenkins-bin "$JENKINS_IMG:/")
+header_end
+
+header_begin "Building up the backup"
+(cd server && docker compose exec -T "$JENKINS_IMG" /jenkins-bin/jenkins-inside-backup.sh)
+header_end
+
+header_begin "Getting the backup"
+rm -fr tmp && mkdir -p tmp
+(cd server && docker compose cp "$JENKINS_IMG:/tmp/export" "$ROOT"/tmp/)
+header_end
+
+header_begin "Synchronizing the bakcup"
+rsync -ir \
+    --ignore-times --checksum \
+    --delete \
+    "$ROOT"/tmp/export/ "$JENKINS_CTX"/config/
+header_end
+
+#    --filter='merge,- jenkins-master/config/.gitignore' \

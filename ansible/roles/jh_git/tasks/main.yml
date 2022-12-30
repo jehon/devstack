@@ -1,0 +1,47 @@
+---
+
+- name: Guess url for {{ path }}
+  when: (url is not defined) or (url | length == 0)
+  block:
+    - name: Guess url for {{ path }} - run
+      ansible.builtin.command:
+        chdir: "{{ path }}"
+        cmd: git config --get remote.origin.url
+      register: jh_git_remote_exec
+      changed_when: false
+      tags:
+        - skip_ansible_lint
+
+    - name: Guess url for {{ path }} - extract
+      ansible.builtin.set_fact:
+        _url: "{{ jh_git_remote_exec.stdout }}"
+
+- name: Calculate version for {{ path }} from branch
+  when: (version is not defined) or (version | length == 0)
+  block:
+    - name: Guess version for {{ path }} - run
+      ansible.builtin.command:
+        chdir: "{{ path }}"
+        cmd: git branch --show-current
+      register: jh_git_branch_exec
+      changed_when: false
+
+    - name: Guess version for {{ path }} - extract
+      ansible.builtin.set_fact:
+        _version: "{{ jh_git_branch_exec.stdout }}"
+
+- name: "Update repo {{ path }} with {{ l_url }} # {{ l_version }}"
+  vars:
+    l_url: "{{ url | default(_url) }}"
+    l_version: "{{ version | default(_version) }}"
+  ansible.builtin.git:
+    dest: "{{ path }}"
+    repo: "{{ l_url }}"
+    version: "{{ l_version }}"
+    clone: true
+    update: true
+    force: true
+    accept_newhostkey: true
+    depth: 1
+    recursive: true
+    single_branch: true

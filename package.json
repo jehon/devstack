@@ -1,0 +1,27 @@
+{
+  "name": "packages",
+  "version": "1.0.0",
+  "description": "This repository is for personal use only.\r It contains helper scripts tailored for my usage.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jehon/devstack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jehon/devstack/issues"
+  },
+  "homepage": "https://github.com/jehon/devstack#readme",
+  "type": "module",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.3.0",
+    "@commitlint/config-conventional": "17.3.0",
+    "husky": "8.0.2"
+  },
+  "scripts": {
+    "postinstall": "type -p husky >/dev/null && husky install || true"
+  }
+}

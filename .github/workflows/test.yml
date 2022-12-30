@@ -1,0 +1,53 @@
+name: Makefile
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+concurrency: 
+  group: release
+  # cancel-in-progress: true
+
+jobs:
+  ga-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+    - uses: actions/checkout@main
+      with:
+        fetch-depth: 0
+
+    - name: dc dump
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: dump
+
+    - id: start
+      name: dc start
+      uses: jehon/actions-devcontainer@main
+      with:
+        action: start
+
+    - name: make dump
+      uses: jehon/actions-devcontainer@main
+      with:
+        run: make dump
+
+    - name: make lint
+      uses: jehon/actions-devcontainer@main
+      with:
+        run: make lint
+
+    - name: dc stop
+      uses: jehon/actions-devcontainer@main
+      if: always()
+      with:
+        action: stop

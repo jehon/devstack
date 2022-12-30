@@ -1,0 +1,17 @@
+{
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#7e0100",
+    },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "shellcheck.customArgs": [
+        "--external-sources"
+    ],
+    "github-actions.workflows.pinned.workflows": [
+        ".github/workflows/test.yml"
+    ],
+    "yaml.customTags": [
+        "!vault"
+    ]
+}

@@ -1,0 +1,50 @@
+---
+
+- name: Virtually disable online repo (by preferences)
+  when: not online_repo
+  ansible.builtin.copy:
+    src: 10-jehon-no-github.pref
+    dest: /etc/apt/preferences.d/10-jehon-no-github.pref
+    owner: root
+    group: root
+    mode: "0644"
+  register: jh_jehon_deb_repo_online
+
+- name: Ensure jehon-github repo is configured
+  ansible.builtin.copy:
+    src: jehon-github.sources
+    dest: /etc/apt/sources.list.d/jehon-github.sources
+    mode: "0644"
+    owner: root
+    group: root
+  register: jh_jehon_deb_repo_online
+
+- name: Add local repo {{ local_repo }}
+  when: local_repo | length > 0
+  ansible.builtin.template:
+    src: jehon-local.sources
+    dest: /etc/apt/sources.list.d/jehon-local.sources
+    mode: "0644"
+    owner: root
+    group: root
+  register: jh_jehon_deb_repo_local
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
+  when: jh_jehon_deb_repo_online.changed or jh_jehon_deb_repo_local.changed
+
+# We need this one to be installed first, because next line will depend on it
+- name: Ensure package jehon is present
+  ansible.builtin.apt:
+    state: latest
+    pkg:
+      - jehon
+  register: jh_jehon_deb_jehon
+
+- name: Apt update
+  ansible.builtin.apt:
+    update_cache: true
+    upgrade: dist
+  when: jh_jehon_deb_jehon.changed
