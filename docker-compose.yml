@@ -26,8 +26,8 @@ services:
     jenkins-master:
         # https://github.com/jenkinsci/docker/blob/master/README.md
         # https://hub.docker.com/r/jenkins/jenkins
-        depends_on: 
-            - apache
+        # depends_on: 
+        #     - apache
         build:
             context: jenkins-master
             dockerfile: Dockerfile
@@ -35,8 +35,17 @@ services:
         privileged: true
         command: --prefix=/jenkins
         volumes:
-            - jh_secrets:/jh_secrets
-            - /var/run/docker.sock:/var/run/docker.sock
+            - type: bind
+              source: /etc/jehon/restricted/jenkins
+              target: /secrets
+              read_only: true
+            - type: bind
+              source: /mnt/docker/jenkins
+              target: /mnt/docker/jenkins
+              read_only: true
+            - type: bind
+              source: /var/run/docker.sock
+              target: /var/run/docker.sock
         expose:
             - 50000
             - 8080
