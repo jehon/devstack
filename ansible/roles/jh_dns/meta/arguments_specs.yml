@@ -1,7 +1,0 @@
----
-
-argument_specs:
-  main:
-    options:
-      dns:
-        type: string

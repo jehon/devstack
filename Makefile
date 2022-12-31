@@ -73,7 +73,8 @@ ansible-lint:
 	cd $(ANSIBLE_SOURCE) && ansible-lint
 	@echo "$@ ok"
 
-ansible-release: ansible-build
+ansible-release:
+	@true
 
 #
 # Node
