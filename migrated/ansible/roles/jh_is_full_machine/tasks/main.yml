@@ -1,0 +1,19 @@
+---
+
+- name: Populate service facts
+  community.docker.current_container_facts:
+
+- name: Detect full machine
+  ansible.builtin.command:
+    cmd: /usr/bin/jh-is-full-machine -q systemd
+  register: jh_is_full_machine
+  failed_when: jh_is_full_machine.rc > 1
+  changed_when: false
+
+- name: Register
+  ansible.builtin.set_fact:
+    jh_is_full_machine: "{{ jh_is_full_machine.rc == 0 }}"
+
+- name: "Debug is in container"
+  ansible.builtin.debug:
+    var: jh_is_full_machine

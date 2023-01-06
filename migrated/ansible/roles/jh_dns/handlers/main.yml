@@ -1,0 +1,4 @@
+---
+
+- name: Add jh_dns.resolvconf
+  ansible.builtin.command: /usr/sbin/resolvconf -u

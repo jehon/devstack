@@ -1,0 +1,24 @@
+---
+
+- name: "Update repo {{ path }} with {{ url }} # {{ version | default('main') }}"
+  ansible.builtin.git:
+    dest: "{{ path }}"
+    repo: "{{ url }}"
+    version: "{{ version | default('main') }}"
+    clone: true
+    update: true
+    force: true
+    accept_newhostkey: true
+    depth: 1
+    recursive: true
+    single_branch: true
+  environment:
+    GIT_TERMINAL_PROMPT: "0"
+
+- name: Configure push url
+  when: push is defined
+  ansible.builtin.command: git remote set-url --push origin "{{ push }}"
+  args:
+    chdir: "{{ path }}"
+  tags:
+    - skip_ansible_lint

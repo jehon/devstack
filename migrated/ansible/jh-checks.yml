@@ -1,0 +1,19 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+
+    # - name: test connection
+    #   ansible.buitin.ping:
+
+    - name: jh-check
+      block:
+        - ansible.builtin.command:
+            cmd: /usr/bin/jh-checks
+          register: jh_checks
+
+        # - ansible.builtin.debug:
+        #     var: jh_checks.stdout
+
+        # - ansible.builtin.debug:
+        #     var: jh_checks.stderr

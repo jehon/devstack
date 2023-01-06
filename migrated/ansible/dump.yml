@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+#  gather_facts: false
+
+  tasks:
+    - debug:
+        var: jehon
+
+    # - name: Display all variables/facts known for a host {{ inventory_hostname }}
+    #   ansible.builtin.debug:
+    #     var: hostvars[inventory_hostname]
+
+    - name: Display ansible distribution
+      ansible.builtin.debug:
+        var: ansible_distribution
+
+    - name: Display ansible lsb
+      ansible.builtin.debug:
+        var: ansible_lsb.id

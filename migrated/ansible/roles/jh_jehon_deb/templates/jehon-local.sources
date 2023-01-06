@@ -1,0 +1,14 @@
+
+#
+# TODO: duplicate file:
+#   - dockers/devcontainer/root/etc/apt/sources.list.d/jehon-workspaces.sources
+#   - ansible/roles/jh_jehon_deb/templates/jehon-local.sources
+#
+
+X-Repolib-Name: Jehon ({{ local_repo }})
+Types: deb
+URIs: file://{{ local_repo }}
+Suites: /
+Components:
+Trusted: yes
+Enabled: yes

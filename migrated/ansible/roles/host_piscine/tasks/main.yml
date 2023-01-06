@@ -1,0 +1,13 @@
+---
+
+- name: Install wifi config
+  ansible.builtin.include_role:
+    name: jh_network
+
+- name: Install packages
+  ansible.builtin.apt:
+    pkg:
+      - jehon
+      - jehon-service-music
+      - jehon-service-network
+      - jehon-service-display

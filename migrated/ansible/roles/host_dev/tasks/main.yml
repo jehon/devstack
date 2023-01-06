@@ -1,0 +1,91 @@
+---
+
+- name: Setup dev system
+  block:
+    - name: Install packages
+      ansible.builtin.apt:
+        force_apt_get: true
+        pkg:
+          - jehon
+          - jehon-packages
+          - jehon-desktop
+          - jehon-hardware-hyperv
+          - jehon-service-music-refresh
+          # Docker
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-compose-plugin
+
+    - name: Set systemd target
+      when: jh_is_full_machine
+      ansible.builtin.include_role:
+        name: jh_systemd_target
+      vars:
+        target: graphical
+
+    - name: Add jh_dns
+      ansible.builtin.include_role:
+        name: jh_dns
+
+#
+# User/dev files
+#
+- name: Setup system-wide files for user
+  block:
+    - name: Set docker shared folder
+      ansible.builtin.file:
+        path: /mnt/docker
+        state: directory
+        mode: "0755"
+
+    - name: Install cryptomedic files
+      with_items:
+        - cryptomedic.php
+        - cryptomedic.sh
+      ansible.builtin.template:
+        src: "{{ item }}"
+        dest: /etc/jehon/restricted/{{ item }}
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install dev.sh file
+      ansible.builtin.template:
+        src: "dev.sh"
+        dest: /etc/jehon/restricted/dev.sh
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Enable photo mount
+      when: jh_is_full_machine
+      ansible.builtin.systemd:
+        name: mnt-cloud-photos.mount
+        enabled: true
+        state: started
+
+    - name: Add jh_camera
+      ansible.builtin.include_role:
+        name: jh_camera
+
+#
+# User side
+#
+- name: Setup profile
+  block:
+    - name: Add user jehon
+      ansible.builtin.include_role:
+        name: jh_user_dev
+      vars:
+        user: jehon
+
+    - name: Setup user folder
+      block:
+        - name: Add git devstack repo
+          ansible.builtin.include_role:
+            name: jh_git
+          vars:
+            path: /opt/jehon/devstack
+            url: https://github.com/jehon/devstack.git
+            push: git@github.com:jehon/devstack.git

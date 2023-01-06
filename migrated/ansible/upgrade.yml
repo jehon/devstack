@@ -1,0 +1,52 @@
+---
+
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+
+- hosts: all
+  gather_facts: false
+  tasks:
+  - name: Update packages
+#    when: false
+    block:
+      - name: Update and upgrade apt packages
+        ansible.builtin.apt:
+          update_cache: true
+          upgrade: full
+          autoclean: true
+          autoremove: true
+          purge: true
+        register: apt
+
+#       - debug: var=apt
+
+      - name: "APT sdtErr"
+        when: apt.changed and apt.stderr_lines | length
+        debug: var=apt.stderr_lines
+
+      - name: "APT sdtOut"
+        when: apt.changed and apt.stdout_lines | length
+        debug: var=apt.stdout_lines
+
+  - name: Update git's
+    # when: false
+    block:
+      - name: Find repos
+        ansible.builtin.find:
+          paths: /opt/jehon/
+          file_type: directory
+          recurse: false
+        register: git_repos_ls
+
+      - name: Get path
+        ansible.builtin.set_fact:
+          git_repos: "{{ git_repos_ls.files | map(attribute='path') }}"
+
+      - name: List repo
+        ansible.builtin.debug:
+          var: git_repos
+
+      - name: Update git
+        loop: "{{ git_repos }}"
+        ansible.builtin.command: git pull
+        args:
+          chdir: "{{ item }}"

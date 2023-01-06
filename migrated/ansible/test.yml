@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  # gather_facts: no
+
+  tasks:
+    - debug:
+        var: jh
+
+    - name: debug ansible
+      include_role:
+        # name: jh_load_services
+        name: jh_is_full_machine
+
+    - debug:
+        var: jh_is_full_machine
+
+    # - name: debug role
+    #   include_role:
+    #     name: jh_common
+    #   # vars:
+    #   #   writable: false

@@ -1,0 +1,11 @@
+---
+
+dependencies:
+  - role: jh_is_full_machine
+
+argument_specs:
+  main:
+    options:
+      jehon_os_package:
+        type: string
+        required: false
