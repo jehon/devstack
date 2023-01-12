@@ -97,3 +97,4 @@
             path: /opt/jehon/devstack
             url: https://github.com/jehon/devstack.git
             push: git@github.com:jehon/devstack.git
+            clean: false

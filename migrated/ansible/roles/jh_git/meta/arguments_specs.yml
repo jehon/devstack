@@ -16,3 +16,7 @@ argument_specs:
         type: string
         required: false
         default: 'main'
+      clean:
+        type: boolean
+        required: false
+        default: true
