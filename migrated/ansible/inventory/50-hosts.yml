@@ -6,6 +6,8 @@ all:
         dev:
           # ansible_host is defined by script
           # ansible_host: "{{ jehon.ip.dev }}"
+          ansible_connection: local
+          become: true
           cloud_type: pcloud-rw
           cloud_cache_size: 20G
           cloud_mount:
