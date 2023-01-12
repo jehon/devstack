@@ -58,6 +58,14 @@
         group: root
         mode: "0755"
 
+    - name: Install tmdb-to-movie.conf file
+      ansible.builtin.template:
+        src: "tmdb-to-movie.conf"
+        dest: /etc/jehon/restricted/tmdb-to-movie.conf
+        owner: root
+        group: root
+        mode: "0755"
+
     - name: Enable photo mount
       when: jh_is_full_machine
       ansible.builtin.systemd:
