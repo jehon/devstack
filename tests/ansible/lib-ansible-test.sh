@@ -31,6 +31,12 @@ test_in_docker() {
 			set -o errexit
 			set -o pipefail
 
+			echo "Loading jh-lib"
+			. /usr/bin/jh-lib
+			echo "Loaded"
+
+			cd /setup
+
 			header_begin "Custom script"
 		EOS
 		cat -

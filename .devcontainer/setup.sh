@@ -13,11 +13,14 @@ apt_install() {
     DEBIAN_FRONTEND=noninteractive apt install --quiet --yes "$@"
 }
 
-apt_install ansible ansible-lint
+echo "*** Configure python3"
+apt_install python-is-python3 python3 python3-pip
+
+echo "*** Configure ansible"
+python -m pip install --upgrade ansible
+python -m pip install --upgrade ansible-lint
 
 if [ ! -r /etc/jehon/restricted/ansible-key ]; then
     mkdir -p /etc/jehon/restricted
     echo "1234" > /etc/jehon/restricted/ansible-key
 fi
-
-cd "$PRJ_ROOT/ansible" && ansible-playbook setup.yml --vault-password-file "$PRJ_ROOT"/tests/ansible/ansible-test-key --limit dev
