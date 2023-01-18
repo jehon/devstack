@@ -10,5 +10,8 @@
     ],
     "github-actions.workflows.pinned.workflows": [
         ".github/workflows/test.yml"
-    ]
+    ],
+    "files.associations": {
+        "Makefile.*": "makefile"
+    }
 }
