@@ -25,29 +25,16 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: dc dump
-      uses: jehon/actions-devcontainer@main
-      with:
-        action: dump
+    - name: Setup
+      run: sudo .devcontainer/setup.sh
 
-    - id: start
-      name: dc start
-      uses: jehon/actions-devcontainer@main
-      with:
-        action: start
+    - run: make dump
 
-    - name: make dump
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make dump
+    - run: make lint
 
-    - name: make lint
-      uses: jehon/actions-devcontainer@main
-      with:
-        run: make lint
+    - run: make build
 
-    - name: dc stop
-      uses: jehon/actions-devcontainer@main
-      if: always()
-      with:
-        action: stop
+    - run: make test
+
+    - run: make release
+      if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
