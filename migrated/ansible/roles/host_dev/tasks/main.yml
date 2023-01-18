@@ -89,12 +89,36 @@
         user: jehon
 
     - name: Setup user folder
+      become: true
+      become_user: jehon
       block:
         - name: Add git devstack repo
           ansible.builtin.include_role:
             name: jh_git
           vars:
-            path: /opt/jehon/devstack
-            url: https://github.com/jehon/devstack.git
-            push: git@github.com:jehon/devstack.git
+            path: /home/jehon/src/devstack
+            url: git@github.com:jehon/devstack.git
+            clean: false
+
+        - name: Add git cryptomedic repo
+          ansible.builtin.include_role:
+            name: jh_git
+          vars:
+            path: /home/jehon/src/cryptomedic
+            url: git@github.com:jehon/cryptomedic.git
+            clean: false
+        - name: Add git file-organizer repo
+          ansible.builtin.include_role:
+            name: jh_git
+          vars:
+            path: /home/jehon/src/file-organizer
+            url: git@github.com:jehon/file-organizer.git
+            clean: false
+
+        - name: Add git tmdb-to-movie repo
+          ansible.builtin.include_role:
+            name: jh_git
+          vars:
+            path: /home/jehon/src/tmdb-to-movie
+            url: git@github.com:jehon/tmdb-to-movie.git
             clean: false
