@@ -19,7 +19,6 @@ dump: ansible-dump
 clean: ansible-clean
 build: ansible-build
 lint: ansible-lint
-release: ansible-release
 
 .PHONY: ansible-dump
 ansible-dump:
@@ -63,4 +62,4 @@ ansible-lint:
 	cd $(ANSIBLE_SOURCE) && ansible-lint
 	@echo "$@ ok"
 
-ansible-release: ansible-build
+ansible-test:
