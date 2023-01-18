@@ -15,4 +15,9 @@ apt_install() {
 
 apt_install ansible ansible-lint
 
+if [ ! -r /etc/jehon/restricted/ansible-key ]; then
+    mkdir -p /etc/jehon/restricted
+    echo "1234" > /etc/jehon/restricted/ansible-key
+fi
+
 cd "$PRJ_ROOT/ansible" && ansible-playbook setup.yml --vault-password-file "$PRJ_ROOT"/tests/ansible/ansible-test-key --limit dev
