@@ -20,11 +20,6 @@
       ansible.builtin.include_role:
         name: host_dev
 
-    - name: setup host devcontainer
-      when: inventory_hostname == "devcontainer"
-      ansible.builtin.include_role:
-        name: host_devcontainer
-
     - name: setup host kiosk
       when: inventory_hostname == "kiosk"
       ansible.builtin.include_role:

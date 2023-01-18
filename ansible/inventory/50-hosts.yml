@@ -47,7 +47,3 @@ all:
     localhost:
       ansible_connection: local
       become: true
-    devcontainer:
-      ansible_connection: local
-      local_repo: /setup/repo
-      online_repo: false
