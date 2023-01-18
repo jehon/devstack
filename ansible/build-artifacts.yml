@@ -8,6 +8,4 @@
       ansible.builtin.template:
         src: "templates/setup-dev-config.json"
         dest: "../tmp/dev-config.json"
-        owner: root
-        group: root
         mode: "0644"

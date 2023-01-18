@@ -1,84 +1,127 @@
+
+#!/usr/bin/env make
+
+#
+# Dependencies:
+#
+#   scripts <= packages <= dockers <= integration tests
+#
+
+all: clear clean version dump lint build test ok
+
+# https://stackoverflow.com/a/26936855/1954789
+# https://stackoverflow.com/a/39420097/1954789
+SHELL=/bin/bash -o pipefail -o errexit
+
+# Locale per default
+LANG=C.UTF-8
+
+# .ONESHELL:
+.SECONDEXPANSION:
+
+ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
+TMP_ROOT = $(ROOT)/tmp
+
+export PATH := $(ROOT)/jehon/usr/bin:$(PATH)
+
+define mkdir
+	@mkdir -p "$(dir $(1))"
+endef
+
+define touch
+	$(call mkdir,$(1))
+	@touch "$(1)"
+endef
+
+DUMP_ALIGN=40
+define dump_info
+@if [ -n "$(2)" ]; then \
+	printf "* %-$(DUMP_ALIGN)s %s\n" '$(1): ' '$(2)'; \
+else \
+	printf "* %-$(DUMP_ALIGN)s %s\n" '$(1): ' '$($(1))'; \
+fi
+endef
+
+define dump_version
+@printf "* %-$(DUMP_ALIGN)s %s\n" '$(shell type $(1)): ' '$(shell $(1) --version | head -n $(if $2,$2,1) | tail -n 1)' 
+endef
+
+define dump_title
+@printf "**************************** $(1) **************************\n"
+endef
+
+define dump_space
+@printf "*\n"
+endef
+
 #
 #
-# Depends on: 
-#     ansible/*
+# Generic targets
 #
-# Generate:
-#     x
 #
-
-ansible: ansible-dump ansible-build ansible-lint
-
-ANSIBLE_TMP=tmp/ansible
-
-ANSIBLE_SOURCE=ansible
-ANSIBLE_GALAXY=$(ANSIBLE_SOURCE)/.galaxy
-
-dump: ansible-dump
-clean: ansible-clean
-build: ansible-build
-lint: ansible-lint
-release: ansible-release
-
-.PHONY: ansible-dump
-ansible-dump:
+.PHONY: dump
+dump:
 	$(call dump_space)
-	$(call dump_title,ANSIBLE)
-	$(call dump_info,ANSIBLE_SOURCE)
-	$(call dump_info,ANSIBLE_GALAXY)
-	$(call dump_version,ansible)
-	$(call dump_version,ansible-lint)
+	$(call dump_title,GLOBAL)
+	$(call dump_info,PWD,$(shell pwd))
+	$(call dump_info,ROOT)
+	$(call dump_info,TMP_ROOT)
+	$(call dump_info,REPO)
+	$(call dump_info,VERSION)
+	$(call dump_space)
 
-.PHONY: ansible-clean
-ansible-clean:
-	rm -fr "$(ANSIBLE_GALAXY)"
-	rm -fr repo/dev-config.json
+.PHONY: clean
+clean: 
+	rm -fr tmp
 
-.PHONY: ansible-build
-ansible-build: $(ANSIBLE_TMP)/.built
+.PHONY: build
+build:
+	@true
 
-$(ANSIBLE_TMP)/.built: \
-		$(shell find ansible/ | grep -v .galaxy ) \
-		$(ANSIBLE_GALAXY)/.done \
-		ansible/tmp/00-all_vars.yml \
-		ansible/tmp/50-hosts.yml \
-		/etc/jehon/restricted/ansible-key
+.PHONY: test
+test:
+	@true
 
-	@mkdir -p repo
-	cd ansible && ansible-playbook build-artifacts.yml
-	$(call touch,$@)
+.PHONY: lint
+lint:
+	@true
 
-/etc/jehon/restricted/ansible-key:
-	if [ ! -r $@ ]; then echo "123" > $@; fi
-	$(call touch,$@)
-
-$(ANSIBLE_GALAXY)/.done: ansible/requirements.yml
-	mkdir -p $(ANSIBLE_GALAXY)
-	( cd ansible && ansible-galaxy install --role-file requirements.yml --roles-path .galaxy/ )
-	$(call touch,$@)
-
-# We need this one in ansible/ to be included in the docker devcontainer
-ansible/tmp/00-all_vars.yml: ansible/inventory/00-all_vars.yml build/ansible-no-secrets.js node_modules/.built
-	$(call mkdir,$@)
-	build/ansible-no-secrets.js "ansible/inventory/00-all_vars.yml" "$@"
-	$(call touch,$@)
-
-ansible/tmp/50-hosts.yml: ansible/inventory/50-hosts.yml build/ansible-no-secrets.js node_modules/.built
-	$(call mkdir,$@)
-	build/ansible-no-secrets.js "ansible/inventory/50-hosts.yml" "$@"
-	$(call touch,$@)
-
-.PHONY: ansible-lint
-ansible-lint:
-	cd $(ANSIBLE_SOURCE) && ansible-lint
-	@echo "$@ ok"
-
-ansible-release:
+.PHONY: release
+release:
 	@true
 
 #
-# Node
 #
+# Helpers
+#
+#
+.PHONY: clear
+clear:
+	clear
+
+.PHONY: ok
+ok:
+	@echo "Ok: done"
+
+# target 'start' could not exists, since it is the name of a file
+
+clean-force: clean
+# Thanks to https://stackoverflow.com/a/46273201/1954789
+	git clean -dfX
+
+#######################################
+#
+# Global receipes
+#
+
+$(TMP_ROOT):
+	mkdir -p "$@"
 
 node_modules/.built: package-lock.json package.json
 	jh-npm-update-if-necessary "$@"
+
+#######################################
+#
+# External makefiles
+#
+include Makefile.ansible

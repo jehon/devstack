@@ -1,9 +1,9 @@
 ---
 
 - name: Ensure DNS
-  block:
   when: jh_is_full_machine
-    - name: using resolv.conf.d
+  block:
+    - name: Using resolv.conf.d
       when: /etc/resolvconf/resolv.conf.d/head is file
       notify: jh_dns.resolvconf
       ansible.builtin.lineinfile:
@@ -12,7 +12,7 @@
         line: nameserver {{ dns }}
         state: present
 
-    - name: using resolv.conf
+    - name: Using resolv.conf
       when: not ( /etc/resolvconf/resolv.conf.d/head is file )
       notify: jh_dns.resolvconf
       ansible.builtin.lineinfile:
