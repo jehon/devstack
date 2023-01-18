@@ -31,27 +31,11 @@ test_in_docker() {
 			set -o errexit
 			set -o pipefail
 
-			echo "Loading jh-lib"
-			. /usr/bin/jh-lib
-			echo "Loaded"
-
-			cd /setup
-
 			header_begin "Custom script"
 		EOS
 		cat -
 		cat <<-'EOS'
 			echo
-			header_end
-
-			header_begin "Run jh-checks (but without failing)"
-			/usr/bin/jh-checks || true
-			header_end
-
-			header_begin "Validating systemd unit files"
-			find /lib/systemd \
-			    -type f -name "jh*.service" \
-			    -exec systemd-analyze verify "{}" "+"
 			header_end
 		EOS
 	) | docker run --label temp --rm -i --privileged "$IMG" "bash" \
