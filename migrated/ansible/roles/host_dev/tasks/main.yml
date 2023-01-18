@@ -24,9 +24,9 @@
       vars:
         target: graphical
 
-    - name: Add jh_dns
-      ansible.builtin.include_role:
-        name: jh_dns
+    # - name: Add jh_dns
+    #   ansible.builtin.include_role:
+    #     name: jh_dns
 
 #
 # User/dev files
