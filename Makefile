@@ -7,7 +7,7 @@
 #   scripts <= packages <= dockers <= integration tests
 #
 
-all: clear clean version dump lint build test ok
+all: clear clean dump lint build test ok
 
 # https://stackoverflow.com/a/26936855/1954789
 # https://stackoverflow.com/a/39420097/1954789
