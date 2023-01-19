@@ -120,7 +120,8 @@ $(TMP_ROOT):
 	mkdir -p "$@"
 
 node_modules/.built: package-lock.json package.json
-	jh-npm-update-if-necessary "$@"
+	npm ci
+        $(call touch,$@)
 
 #######################################
 #
