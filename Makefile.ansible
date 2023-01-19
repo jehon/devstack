@@ -53,7 +53,7 @@ ansible-dependencies: .python/ $(ANSIBLE_TMP)/.built
 $(ANSIBLE_TMP)/.built: .python \
 		$(shell find ansible/ | grep -v .galaxy ) \
 		$(ANSIBLE_GALAXY)/.done \
-		ansible/tmp/00-all_vars.yml
+		$(ANSIBLE_TMP)/00-all_vars.yml
 
 	@mkdir -p "$(ANSIBLE_TMP)"
 	cd ansible && ansible-playbook --vault-password-file $(ANSIBLE_TEST_KEY) build-artifacts.yml
