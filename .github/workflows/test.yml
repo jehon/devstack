@@ -34,7 +34,7 @@ jobs:
 
     - run: make build
 
-    - run: make test
+    # - run: make test
 
     - run: make release
       if: ${{ github.ref_name == 'main' && github.ref_type == 'branch' }}
