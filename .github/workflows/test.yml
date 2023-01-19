@@ -21,9 +21,6 @@ jobs:
     timeout-minutes: 120
 
     steps:
-    - run: echo "${HOME}/.local/bin" >> $GITHUB_PATH
-    - run: echo "/root/.local/bin/" >>  $GITHUB_PATH
-
     - uses: actions/checkout@main
       with:
         fetch-depth: 0
