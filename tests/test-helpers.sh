@@ -8,3 +8,8 @@ export PRJ_ROOT
 
 PRJ_TEST_DATA="$PRJ_ROOT/tests/data"
 export PRJ_TEST_DATA
+
+fatal() {
+    echo "$@" >&2
+    exit 1
+}

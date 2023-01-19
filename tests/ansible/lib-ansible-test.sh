@@ -10,7 +10,7 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 . "$SWD/../test-helpers.sh"
 
 TEST_NAME="$(basename "${BASH_SOURCE[1]}")"
-exec &> >( jh-tag-stdin "$TEST_NAME" )
+exec &> >( $PRJ_ROOT/build/tag "$TEST_NAME" )
 
 echo "*******************************************************"
 echo "***"
@@ -45,8 +45,8 @@ test_in_docker() {
 			header_end
 		EOS
 	) | docker run --label temp --rm -i --privileged "$IMG" "bash" \
-		|& jh-tag-stdin "inside" \
-		|| jh_fatal "!! Test failed: $TEST_NAME ($?) !!"
+		|& $PRJ_ROOT/build/tag "inside" \
+		|| fatal "!! Test failed: $TEST_NAME ($?) !!"
 
 	echo "**************************************"
 	echo "***                                ***"
