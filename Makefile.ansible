@@ -24,7 +24,7 @@ lint: ansible-lint
 test: ansible-test
 
 .PHONY: ansible-dump
-ansible-dump:
+ansible-dump: ansible-dependencies
 	$(call dump_space)
 	$(call dump_title,ANSIBLE)
 	$(call dump_info,ANSIBLE_SOURCE)
@@ -43,7 +43,9 @@ ansible-clean:
 	rm -fr "$(TMP_ROOT)/dev-config.json"
 
 .PHONY: ansible-build
-ansible-build: .python/ $(ANSIBLE_TMP)/.built
+ansible-build: ansible-dependencies
+
+ansible-dependencies: .python/ $(ANSIBLE_TMP)/.built
 
 .python:
 	pip install --target .python ansible ansible-lint
