@@ -5,5 +5,5 @@
 - hosts: servers
   gather_facts: false
   tasks:
-  - name: Reboot machines
-    ansible.builtin.reboot:
+    - name: Reboot machines
+      ansible.builtin.reboot:
