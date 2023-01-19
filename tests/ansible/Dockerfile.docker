@@ -1,4 +1,0 @@
-
-FROM test-dockers/devcontainer:local
-
-RUN /setup/enable-docker
