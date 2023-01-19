@@ -47,7 +47,7 @@ ansible-build: ansible-dependencies
 
 ansible-dependencies: .python/ $(ANSIBLE_TMP)/.built
 
-.python:
+.python/:
 	pip install --target .python ansible ansible-lint
 
 $(ANSIBLE_TMP)/.built: .python \
