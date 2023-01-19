@@ -14,11 +14,7 @@ apt_install() {
 }
 
 echo "*** Configure python3"
-apt_install python-is-python3 python3 python3-pip
-
-echo "*** Configure ansible"
-python -m pip install --upgrade ansible
-python -m pip install --upgrade ansible-lint
+apt_install python-is-python3 python3 python3-pip python3-netaddr
 
 if [ ! -r /etc/jehon/restricted/ansible-key ]; then
     mkdir -p /etc/jehon/restricted

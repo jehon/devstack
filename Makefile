@@ -1,4 +1,3 @@
-
 #!/usr/bin/env make
 
 #
@@ -22,7 +21,8 @@ LANG=C.UTF-8
 ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 TMP_ROOT = $(ROOT)/tmp
 
-export PATH := $(ROOT)/jehon/usr/bin:$(PATH)
+export PATH := $(ROOT)/.python/bin:$(PATH)
+export PYTHONPATH := $(ROOT)/.python:$(PYTHONPATH)
 
 define mkdir
 	@mkdir -p "$(dir $(1))"
@@ -68,6 +68,8 @@ dump:
 	$(call dump_info,TMP_ROOT)
 	$(call dump_info,REPO)
 	$(call dump_info,VERSION)
+	$(call dump_info,PATH)
+	$(call dump_info,PYTHONPATH)
 	$(call dump_space)
 
 .PHONY: clean

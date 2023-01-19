@@ -1,3 +1,5 @@
+#!/usr/bin/env make
+
 #
 #
 # Depends on: 
@@ -27,8 +29,13 @@ ansible-dump:
 	$(call dump_title,ANSIBLE)
 	$(call dump_info,ANSIBLE_SOURCE)
 	$(call dump_info,ANSIBLE_GALAXY)
-	$(call dump_version,ansible)
-	$(call dump_version,ansible-lint)
+	@echo "* Ansible: "
+	@type ansible
+	@ansible --version | head -n 1
+
+	@echo "* Ansible-lint:"
+	@type ansible-lint
+	@ansible-lint --version | head -n 1
 
 .PHONY: ansible-clean
 ansible-clean:
@@ -36,9 +43,12 @@ ansible-clean:
 	rm -fr "$(TMP_ROOT)/dev-config.json"
 
 .PHONY: ansible-build
-ansible-build: $(ANSIBLE_TMP)/.built
+ansible-build: .python/ $(ANSIBLE_TMP)/.built
 
-$(ANSIBLE_TMP)/.built: \
+.python:
+	pip install --target .python ansible ansible-lint
+
+$(ANSIBLE_TMP)/.built: .python \
 		$(shell find ansible/ | grep -v .galaxy ) \
 		$(ANSIBLE_GALAXY)/.done \
 		ansible/tmp/00-all_vars.yml
