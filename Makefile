@@ -33,6 +33,11 @@ define touch
 	@touch "$(1)"
 endef
 
+define copy
+	$(call mkdir,$(1))
+	@cp -fv "$(2)" "$(1)"
+endef
+
 DUMP_ALIGN=40
 define dump_info
 @if [ -n "$(2)" ]; then \
