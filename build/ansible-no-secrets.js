@@ -11,6 +11,17 @@ if (!destination) {
   process.exit(1);
 }
 
+const SECRET = '#one_secret#'
+
+// https://eemeli.org/yaml/#writing-custom-tags
+const tagVault = {
+  // identify: value => value instanceof RegExp,
+  tag: '!vault',
+  resolve(_str) {
+    return SECRET
+  }
+}
+
 function iterate(obj, key = '') {
   for (var property in obj) {
     switch(typeof(obj[property])) {
@@ -18,15 +29,15 @@ function iterate(obj, key = '') {
         iterate(obj[property], `${key}.${property}`);
         break;
       case 'string':
-        if (obj[property].startsWith('$ANSIBLE_VAULT')) {
-          obj[property] = `vault${key}.${property}`;
+        if (obj[property] == SECRET) {
+          obj[property] += `-${key}.${property}`;
         }
     }
   }
 }
 
 const file = fs.readFileSync(filename, 'utf8');
-const obj = YAML.parse(file);
+const obj = YAML.parse(file, { customTags: [ tagVault ]});
 iterate(obj);
 
 let yaml = '---\n\n';

@@ -15,6 +15,7 @@
   "homepage": "https://github.com/jehon/devstack#readme",
   "type": "module",
   "dependencies": {
+    "yaml": "2.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "17.3.0",
