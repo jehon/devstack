@@ -38,7 +38,10 @@ test_in_docker() {
 			set +x
 			echo
 		EOS
-	) | docker run --rm --interactive -v "$PRJ_ROOT/ansible:/ansible" "$IMG" "bash" \
+	) | docker run --rm --interactive  \
+			-v "$PRJ_ROOT/ansible:/ansible" \
+			-v "$SWD/built/00-all_vars.yml:/ansible/inventory/00-all_vars.yml" \
+			"$IMG" "bash" \
 		|& $PRJ_ROOT/build/tag "inside" \
 		|| fatal "!! Test failed: $TEST_NAME ($?) !!"
 
