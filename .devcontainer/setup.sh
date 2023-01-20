@@ -8,4 +8,4 @@ SWD="$(dirname "${BASH_SOURCE[0]}")"
 PRJ_ROOT="$(dirname "$SWD")"
 export PRJ_ROOT
 
-$SWD/setup-ansible.sh
+$SWD/ansible-requirements.sh
