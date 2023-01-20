@@ -71,8 +71,7 @@ ansible-lint:
 	@echo "$@ ok"
 
 ansible-test: tests/ansible/built/.docker \
-		tests/ansible/built/00-all_vars.yml \
-		node_modules/.built
+		tests/ansible/built/00-all_vars.yml
 
 	run-parts --exit-on-error --verbose --regex "^[0-9][0-9]-.*" ./tests/ansible/
 
@@ -91,7 +90,7 @@ tests/ansible/built/ansible-requirements.sh: .devcontainer/ansible-requirements.
 tests/ansible/built/ansible-install.sh: build/ansible-install.sh
 	$(call copy,$@,$<)
 
-tests/ansible/built/00-all_vars.yml: ansible/inventory/00-all_vars.yml
+tests/ansible/built/00-all_vars.yml: ansible/inventory/00-all_vars.yml node_modules/.built
 	$(call mkdir,$@)
 	build/ansible-no-secrets.js "ansible/inventory/00-all_vars.yml" "$@"
 	$(call touch,$@)
