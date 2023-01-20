@@ -30,12 +30,15 @@ test_in_docker() {
 			echo "+ pre-script begin"
 			set -o errexit
 			set -o pipefail
+
+			cd /ansible
 		EOS
 		cat -
 		cat <<-'EOS'
+			set +x
 			echo
 		EOS
-	) | docker run --label temp --rm -i --privileged "$IMG" "bash" \
+	) | docker run --rm --interactive -v "$PRJ_ROOT/ansible:/ansible" "$IMG" "bash" \
 		|& $PRJ_ROOT/build/tag "inside" \
 		|| fatal "!! Test failed: $TEST_NAME ($?) !!"
 
