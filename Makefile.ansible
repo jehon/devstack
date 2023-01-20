@@ -48,7 +48,7 @@ ansible-build: ansible-dependencies
 ansible-dependencies: .python/ $(ANSIBLE_TMP)/.built
 
 .python/:
-	pip install --target .python ansible ansible-lint
+	cd $(ROOT) && $(ROOT)/build/ansible-install.sh
 
 $(ANSIBLE_TMP)/.built: .python \
 		$(shell find ansible/ | grep -v .galaxy ) \
