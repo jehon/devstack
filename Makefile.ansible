@@ -84,7 +84,7 @@ tests/ansible/built/.built: \
 		tests/ansible/built/ansible-requirements.sh \
 		tests/ansible/built/ansible-install.sh
 
-	cd tests/ansible && DOCKER_BUILDKIT=1 docker build --tag "test-ansible/ansible" .
+	cd tests/ansible && DOCKER_BUILDKIT=1 docker build --tag "test-ansible/ansible:local" .
 
 	$(call touch,$@)
 

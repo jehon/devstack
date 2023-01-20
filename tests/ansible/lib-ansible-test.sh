@@ -21,7 +21,7 @@ echo "*******************************************************"
 # shellcheck disable=SC2120
 # shellcheck disable=SC2119
 test_in_docker() {
-	IMG="${1:-test-dockers/devcontainer:local}"
+	IMG="${1:-test-ansible/ansible}:local"
 
 	echo "***    - image: $IMG"
 
@@ -30,19 +30,10 @@ test_in_docker() {
 			echo "+ pre-script begin"
 			set -o errexit
 			set -o pipefail
-
-			echo "Loading jh-lib"
-			. /usr/bin/jh-lib
-			echo "Loaded"
-
-			cd /setup
-
-			header_begin "Custom script"
 		EOS
 		cat -
 		cat <<-'EOS'
 			echo
-			header_end
 		EOS
 	) | docker run --label temp --rm -i --privileged "$IMG" "bash" \
 		|& $PRJ_ROOT/build/tag "inside" \
@@ -51,7 +42,6 @@ test_in_docker() {
 	echo "**************************************"
 	echo "***                                ***"
 	echo "*** Test in docker: $TEST_NAME - done"
-	ok "docker test $TEST_NAME"
 	echo "***                                ***"
 	echo "**************************************"
 }
