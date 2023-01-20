@@ -41,6 +41,8 @@ ansible-dump: ansible-dependencies
 ansible-clean:
 	rm -fr "$(ANSIBLE_GALAXY)"
 	rm -fr "$(TMP_ROOT)/dev-config.json"
+	rm -fr tests/ansible/built
+	docker image rm -f $$( docker image ls --filter 'reference=test-ansible/*' --format '{{.Repository}}:{{.Tag}}' ) 2>/dev/null || echo "!! No image to remove"
 
 .PHONY: ansible-build
 ansible-build: ansible-dependencies
@@ -75,5 +77,19 @@ ansible-lint:
 	cd $(ANSIBLE_SOURCE) && ansible-lint
 	@echo "$@ ok"
 
-ansible-test:
+ansible-test: tests/ansible/built/.built
 	run-parts --exit-on-error --verbose --regex "^[0-9][0-9]-.*" ./tests/ansible/
+
+tests/ansible/built/.built: \
+		tests/ansible/built/ansible-requirements.sh \
+		tests/ansible/built/ansible-install.sh
+
+	cd tests/ansible && DOCKER_BUILDKIT=1 docker build --tag "test-ansible/ansible" .
+
+	$(call touch,$@)
+
+tests/ansible/built/ansible-requirements.sh: .devcontainer/ansible-requirements.sh
+	$(call copy,$@,$<)
+
+tests/ansible/built/ansible-install.sh: build/ansible-install.sh
+	$(call copy,$@,$<)
