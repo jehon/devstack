@@ -93,6 +93,7 @@
       become_user: jehon
       block:
         - name: Add git devstack repo
+          when: (ansible_env.HOME + '/.ssh/id_rsa') is file
           ansible.builtin.include_role:
             name: jh_git
           vars:
