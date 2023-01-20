@@ -102,6 +102,7 @@
             clean: false
 
         - name: Add git cryptomedic repo
+          when: (ansible_env.HOME + '/.ssh/id_rsa') is file
           ansible.builtin.include_role:
             name: jh_git
           vars:
@@ -109,6 +110,7 @@
             url: git@github.com:jehon/cryptomedic.git
             clean: false
         - name: Add git file-organizer repo
+          when: (ansible_env.HOME + '/.ssh/id_rsa') is file
           ansible.builtin.include_role:
             name: jh_git
           vars:
@@ -117,6 +119,7 @@
             clean: false
 
         - name: Add git tmdb-to-movie repo
+          when: (ansible_env.HOME + '/.ssh/id_rsa') is file
           ansible.builtin.include_role:
             name: jh_git
           vars:
