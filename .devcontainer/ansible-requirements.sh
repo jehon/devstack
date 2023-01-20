@@ -3,9 +3,6 @@
 set -o errexit
 set -o pipefail
 
-PRJ_ROOT="$(dirname "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)")"
-export PRJ_ROOT
-
 apt update
 
 apt_install() {
