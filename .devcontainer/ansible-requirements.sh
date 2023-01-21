@@ -16,7 +16,7 @@ apt_install() {
 echo "*** Configure python3"
 apt_install python-is-python3 python3 python3-pip python3-netaddr
 
-if [ ! -r conf/ansible-key ]; then
-    mkdir -p conf
-    echo "1234" > conf/ansible-key
+if [ ! -r "$ROOT"/conf/ansible-key ]; then
+    mkdir -p "$ROOT"/conf
+    echo "1234" > "$ROOT"/conf/ansible-key
 fi
