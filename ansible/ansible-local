@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+SWD="$(dirname "${BASH_SOURCE[0]}")"
+
+sudo -E ansible-playbook setup.yml --limit dev
