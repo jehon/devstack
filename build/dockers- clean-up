@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: unused
+
 set -o errexit
 set -o pipefail
 
