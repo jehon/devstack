@@ -109,6 +109,7 @@
             path: /home/jehon/src/cryptomedic
             url: git@github.com:jehon/cryptomedic.git
             clean: false
+
         - name: Add git file-organizer repo
           when: (ansible_env.HOME + '/.ssh/id_rsa') is file
           ansible.builtin.include_role:
