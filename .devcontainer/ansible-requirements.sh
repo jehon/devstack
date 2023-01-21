@@ -3,6 +3,9 @@
 set -o errexit
 set -o pipefail
 
+SWD="$(dirname "${BASH_SOURCE[0]}")"
+ROOT="$( dirname "$SWD" )"
+
 apt update
 
 apt_install() {
@@ -13,7 +16,7 @@ apt_install() {
 echo "*** Configure python3"
 apt_install python-is-python3 python3 python3-pip python3-netaddr
 
-if [ ! -r /etc/jehon/restricted/ansible-key ]; then
-    mkdir -p /etc/jehon/restricted
-    echo "1234" > /etc/jehon/restricted/ansible-key
+if [ ! -r conf/ansible-key ]; then
+    mkdir -p conf
+    echo "1234" > conf/ansible-key
 fi
