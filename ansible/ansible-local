@@ -2,4 +2,6 @@
 
 SWD="$(dirname "${BASH_SOURCE[0]}")"
 
-sudo -E ansible-playbook setup.yml --limit dev
+RP=$(type -p "ansible-playbook")
+
+sudo PYTHONPATH="$SWD/../.python" "$RP" setup.yml --limit dev
