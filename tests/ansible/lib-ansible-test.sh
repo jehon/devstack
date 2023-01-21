@@ -18,11 +18,6 @@ echo "*** Test in docker: $TEST_NAME"
 echo "***"
 echo "*******************************************************"
 
-if [ ! -r "$PRJ_ROOT"/conf/ansible-key ]; then
-    mkdir -p "$PRJ_ROOT"/conf
-    echo "1234" > "$PRJ_ROOT"/conf/ansible-key
-fi
-
 # shellcheck disable=SC2120
 # shellcheck disable=SC2119
 test_in_docker() {
@@ -45,7 +40,8 @@ test_in_docker() {
 		EOS
 	) | docker run --rm --interactive  \
 			-v "$PRJ_ROOT/ansible:/ansible" \
-			-v "$SWD/built/00-all_vars.yml:/ansible/inventory/00-all_vars.yml" \
+			-v "$PRJ_ROOT/tmp/ansible/00-all_vars.yml:/ansible/inventory/00-all_vars.yml" \
+			-v "$PRJ_ROOT/tests/ansible-key:/ansible/conf/ansible-key" \
 			"$IMG" "bash" \
 		|& $PRJ_ROOT/build/tag "inside" \
 		|| fatal "!! Test failed: $TEST_NAME ($?) !!"
