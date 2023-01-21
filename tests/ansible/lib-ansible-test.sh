@@ -18,6 +18,11 @@ echo "*** Test in docker: $TEST_NAME"
 echo "***"
 echo "*******************************************************"
 
+if [ ! -r "$PRJ_ROOT"/conf/ansible-key ]; then
+    mkdir -p "$PRJ_ROOT"/conf
+    echo "1234" > "$PRJ_ROOT"/conf/ansible-key
+fi
+
 # shellcheck disable=SC2120
 # shellcheck disable=SC2119
 test_in_docker() {
