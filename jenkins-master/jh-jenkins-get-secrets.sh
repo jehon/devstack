@@ -13,10 +13,12 @@ set -o errexit
 #  Thanks to https://stackoverflow.com/a/38474024/1954789
 #
 TARGET="$JH_SWD/tmp"
+mkdir -p "$TARGET"
+
 
 echo "## Backup secrets..."
-docker cp "$JENKINS_DOCKER_NAME:$JENKINS_GUEST_HOME/secrets/hudson.util.Secret" "$TARGET/"
-docker cp "$JENKINS_DOCKER_NAME:$JENKINS_GUEST_HOME/secrets/master.key" "$TARGET/"
+docker compose cp "$JENKINS_DOCKER_NAME:$JENKINS_GUEST_HOME/secrets/hudson.util.Secret" "$TARGET/"
+docker compose cp "$JENKINS_DOCKER_NAME:$JENKINS_GUEST_HOME/secrets/master.key" "$TARGET/"
 echo "## Backup secrets done"
 
 echo "***"
