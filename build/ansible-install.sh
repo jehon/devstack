@@ -3,7 +3,7 @@
 set -o errexit
 set -o pipefail
 
-pip install --upgrade --target .python ansible ansible-lint
+pip install --upgrade --target .python ansible ansible-lint ansible-vault
 
 PWD="$(pwd)"
 
