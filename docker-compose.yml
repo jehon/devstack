@@ -46,6 +46,8 @@ services:
             - type: bind
               source: /var/run/docker.sock
               target: /var/run/docker.sock
+        ports:
+            - 8080:8080
         expose:
             - 50000
             - 8080
