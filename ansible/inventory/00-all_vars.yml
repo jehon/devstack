@@ -272,6 +272,10 @@ all:
               6532376463333133320a343764613561636138643965306464653730363932656163326464306137
               3733
 
+        jenkins:
+          hudson_util_Secret: todo
+          master_key: todo
+
         tmdb:
           key: !vault |
               $ANSIBLE_VAULT;1.1;AES256

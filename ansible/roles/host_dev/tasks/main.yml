@@ -74,6 +74,32 @@
         group: root
         mode: "0755"
 
+    - name: Install Jenkins
+      block:
+        - name: Install jenkins master.key
+          ansible.builtin.file:
+            state: directory
+            dest: /mnt/docker/jenkins
+            owner: root
+            group: root
+            mode: "0755"
+
+        - name: Install jenkins master.key
+          ansible.builtin.template:
+            src: jenkins-master.key
+            dest: /etc/jehon/restricted/jenkins/master.key
+            owner: root
+            group: root
+            mode: "0755"
+
+        - name: Install jenkins hudson.util.Secret
+          ansible.builtin.template:
+            src: jenkins-hudson.util.Secret
+            dest: /etc/jehon/restricted/jenkins/hudson.util.Secret
+            owner: root
+            group: root
+            mode: "0755"
+
     - name: Enable photo mount
       when: jh_is_full_machine
       ansible.builtin.systemd:
