@@ -1,5 +1,7 @@
 <?php
 
+// Installed by ansible
+
 global $myconfig;
 
 $myconfig['security']['admin'] = '{{jehon.credentials.cryptomedic.security_admin}}';

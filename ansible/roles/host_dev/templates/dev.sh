@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Installed by ansible
+
 set -o errexit
 
 export JH_DOCKER_HUB_TOKEN="{{ jehon.credentials.docker.token }}"

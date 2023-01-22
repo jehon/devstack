@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Installed by ansible
+
 set -o errexit
 
 export JH_CRYPTOMEDIC_UPLOAD_USER="{{jehon.credentials.cryptomedic.upload_user}}"
