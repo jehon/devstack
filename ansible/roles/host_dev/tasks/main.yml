@@ -24,6 +24,14 @@
       vars:
         target: graphical
 
+    - name: Configure wsl
+      ansible.builtin.template:
+        src: wsl.conf
+        dest: /etc/wsl.conf
+        owner: root
+        group: root
+        mode: "0755"
+
     # - name: Add jh_dns
     #   ansible.builtin.include_role:
     #     name: jh_dns
