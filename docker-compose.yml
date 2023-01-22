@@ -42,7 +42,6 @@ services:
             - type: bind
               source: /mnt/docker/jenkins
               target: /mnt/docker/jenkins
-              read_only: true
             - type: bind
               source: /var/run/docker.sock
               target: /var/run/docker.sock

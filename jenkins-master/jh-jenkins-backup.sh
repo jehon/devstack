@@ -7,12 +7,12 @@ set -o pipefail
 . "$JH_SWD"/jenkins-bin/jenkins-lib.sh
 
 header_begin "Building up the backup"
-docker exec --user root "$JENKINS_DOCKER_NAME" /jenkins-bin/jenkins-inside-backup.sh
+docker compose exec --user root "$JENKINS_DOCKER_NAME" /jenkins-bin/jenkins-inside-backup.sh
 header_end
 
 header_begin "Synchronizing the bakcup"
 rsync -ir \
     --ignore-times --checksum \
     --delete \
-    "$JENKINS_GUEST_EXPORT/" "$JENKINS_HOST_CONFIGS"
+    "/mnt/docker/jenkins" "$JH_SWD/config"
 header_end
