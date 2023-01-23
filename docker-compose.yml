@@ -41,24 +41,21 @@ services:
             retries: 10
             start_period: 30s
 
-    # jenkins_agent_1:
-    #     # https://hub.docker.com/r/jenkins/inbound-agent
-    #     # https://hub.docker.com/r/jenkins/jnlp-agent-docker
-    #     profiles: [ "manual" ]
-    #     image: jenkins/jnlp-agent-node
-    #     privileged: true
-    #     environment:
-    #         JENKINS_URL: http://jenkins-master:50000
-    #         JENKINS_AGENT_NAME: agent_1
-    #     volumes:
-    #         - /var/run/docker.sock:/var/run/docker.sock
-    #     command: 
-    #     # docker run -i --rm --name jenkins_agent_basic --init jenkins/agent java -jar /usr/share/jenkins/agent.jar
-    #     # stdin_open: true # docker run -i
-    #     # tty: true        # docker run -t
-    #     # user: root
-    #     # entrypoint: java
-    #     # command: jenkins/jnlp-agent-docker -jar /usr/share/jenkins/agent.jar
+    jenkins_a1:
+        # Doc: https://hub.docker.com/r/jenkins/inbound-agent
+        # Doc: https://hub.docker.com/r/jenkins/jnlp-slave
+        # Image: https://hub.docker.com/r/jenkins/jnlp-agent-docker
+        depends_on:
+            jenkins:
+                condition: service_healthy
+        restart: unless-stopped
+        image: jenkins/inbound-agent
+        # privileged: true
+        environment:
+            JENKINS_URL: http://jenkins:8080/jenkins/
+            JENKINS_AGENT_NAME: agent
+        # volumes:
+        #     - /var/run/docker.sock:/var/run/docker.sock
 
     portainer:
         image: portainer/portainer-ce:latest
