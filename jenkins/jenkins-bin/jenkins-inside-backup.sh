@@ -38,5 +38,8 @@ rsync --prune-empty-dirs --archive \
 rsync --prune-empty-dirs --archive \
     "$JENKINS_HOME/nodes" "$JENKINS_EXPORT/raw"
 
+rsync --prune-empty-dirs --archive \
+    "$JENKINS_HOME/users" "$JENKINS_EXPORT/raw"
+
 cp "$JENKINS_HOME/"*.xml "$JENKINS_EXPORT/raw"
 echo "## Backup raw data done"
