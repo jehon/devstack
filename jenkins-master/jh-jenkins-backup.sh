@@ -14,5 +14,5 @@ header_begin "Synchronizing the bakcup"
 rsync -ir \
     --ignore-times --checksum \
     --delete \
-    "/mnt/docker/jenkins" "$JH_SWD/config"
+    "/mnt/docker/jenkins/" "$JH_SWD/config"
 header_end
