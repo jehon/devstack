@@ -3,6 +3,12 @@
 set -o errexit
 set -o pipefail
 
+SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+
+. "$SWD"/jenkins-lib.sh
+
+jenkins_check
+
 . /usr/bin/jh-lib
 . "$JH_SWD"/jenkins-bin/jenkins-lib.sh
 

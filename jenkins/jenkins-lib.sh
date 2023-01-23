@@ -11,6 +11,10 @@ export JENKINS_GUEST_HOME="/var/jenkins_home"
 export JENKINS_URL="http://localhost:8080/jenkins"
 export DS_ROOT="$SWD/../"
 
+if [ -r /etc/jehon/restricted/jenkins/env.sh ]; then
+    . /etc/jehon/restricted/jenkins/env.sh
+fi
+
 mkdir -p "$TMP"
 
 if [ ! -r "$JENKINS_JAR" ]; then
@@ -24,7 +28,7 @@ fi
 
 jenkins_cli() {
     # Need JENKINS_URL
-    java -jar "$JENKINS_JAR" -s "$JENKINS_URL" -webSocket -auth "jehon:password" "$@"
+    java -jar "$JENKINS_JAR" -s "$JENKINS_URL" -webSocket -auth "${JENKINS_SYSTEM_USER}:${JENKINS_SYSTEM_KEY}" "jehon:password" "$@"
 }
 
 jenkins_check() {
