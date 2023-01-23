@@ -31,20 +31,13 @@ services:
         build:
             context: jenkins-master
             dockerfile: Dockerfile
-        user: root
-        privileged: true
+        restart: unless-stopped
         command: --prefix=/jenkins
         volumes:
             - type: bind
-              source: /etc/jehon/restricted/jenkins
-              target: /secrets
-              read_only: true
-            - type: bind
               source: /mnt/docker/jenkins
               target: /mnt/docker/jenkins
-            - type: bind
-              source: /var/run/docker.sock
-              target: /var/run/docker.sock
+              # Export configs
         ports:
             - 8080:8080
         expose:

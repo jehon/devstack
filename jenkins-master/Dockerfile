@@ -32,27 +32,20 @@ USER root
 
 RUN apt-get update && apt-get install -y rsync curl docker.io
 
-# Add helper scripts
-ADD ./jenkins-bin /jenkins-bin
-
-## Add configuration to /tmp/config
-ADD --chown=jenkins config/ /tmp/config
-
-RUN mkdir $JENKINS_REF/secrets \
-    && mkdir -p /etc/jehon/restricted/jenkins \
-    && ln -s /secrets/hudson.util.Secret $JENKINS_REF/secrets/ \
-    && ln -s /secrets/master.key $JENKINS_REF/secrets/ \
-    && chown -R jenkins $JENKINS_REF/secrets/
-
-RUN ls -al /usr/share/jenkins/ref/secrets/
-
 #####################################################
 # Back to jenkins user
 #####################################################
 USER jenkins
 
-# Install plugins
-RUN jenkins-plugin-cli --plugin-file /tmp/config/plugins.txt
+# Add helper scripts
+ADD ./jenkins-bin /jenkins-bin
 
-# Copy all files directly into folder
-ADD --chown=jenkins config/raw/ $JENKINS_GUEST_HOME
+# Add generated
+ADD --chown=jenkins built/ ${JENKINS_REF}/
+
+# Add config
+ADD --chown=jenkins config/raw/ ${JENKINS_REF}/
+
+# Install plugins
+ADD config/plugins.txt /plugins.txt
+RUN jenkins-plugin-cli --plugin-file /plugins.txt
