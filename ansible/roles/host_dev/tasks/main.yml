@@ -70,15 +70,7 @@
             group: jh_secrets
             mode: "0755"
 
-        - name: Install jenkins master.key
-          ansible.builtin.file:
-            state: directory
-            dest: /mnt/docker/jenkins
-            owner: root
-            group: jh_secrets
-            mode: "0755"
-
-        - name: Install jenkins hudson.util.Secret
+        - name: "Install jenkins {{ item }}"
           with_items:
             - hudson.util.Secret
             - master.key
@@ -89,6 +81,14 @@
             owner: root
             group: jh_secrets
             mode: "0755"
+
+    - name: Install /mnt/docker/jenkins
+      ansible.builtin.file:
+        state: directory
+        dest: /mnt/docker/jenkins
+        owner: root
+        group: jh_secrets
+        mode: "0755"
 
     - name: Enable photo mount
       when: jh_is_full_machine
