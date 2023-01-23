@@ -47,57 +47,47 @@
         state: directory
         mode: "0755"
 
-    - name: Install cryptomedic files
+    - name: Install secrets files
       with_items:
         - cryptomedic.php
         - cryptomedic.sh
+        - dev.sh
+        - tmdb.key
       ansible.builtin.template:
         src: "{{ item }}"
         dest: /etc/jehon/restricted/{{ item }}
         owner: root
-        group: root
-        mode: "0755"
-
-    - name: Install dev.sh file
-      ansible.builtin.template:
-        src: "dev.sh"
-        dest: /etc/jehon/restricted/dev.sh
-        owner: root
-        group: root
-        mode: "0755"
-
-    - name: Install tmdb.key file
-      ansible.builtin.template:
-        src: tmdb.key
-        dest: /etc/jehon/restricted/tmdb.key
-        owner: root
-        group: root
+        group: jh_secrets
         mode: "0755"
 
     - name: Install Jenkins
       block:
+        - name: Create jenkins folder
+          ansible.builtin.file:
+            path: /etc/jehon/restricted/jenkins
+            state: directory
+            owner: root
+            group: jh_secrets
+            mode: "0755"
+
         - name: Install jenkins master.key
           ansible.builtin.file:
             state: directory
             dest: /mnt/docker/jenkins
             owner: root
-            group: root
-            mode: "0755"
-
-        - name: Install jenkins master.key
-          ansible.builtin.template:
-            src: jenkins-master.key
-            dest: /etc/jehon/restricted/jenkins/master.key
-            owner: root
-            group: root
+            group: jh_secrets
             mode: "0755"
 
         - name: Install jenkins hudson.util.Secret
+          with_items:
+            - hudson.util.Secret
+            - master.key
+            - env.sh
           ansible.builtin.template:
-            src: jenkins-hudson.util.Secret
-            dest: /etc/jehon/restricted/jenkins/hudson.util.Secret
+            src: jenkins/{{ item }}
+            dest: /etc/jehon/restricted/jenkins/{{ item }}
             owner: root
-            group: root
+            group: jh_secrets
             mode: "0755"
 
     - name: Enable photo mount

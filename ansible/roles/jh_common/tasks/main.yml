@@ -1,4 +1,5 @@
 ---
+
 - name: Calculate os name from ansible_lsb.id
   when: jehon_os_package is undefined
   ansible.builtin.set_fact:
@@ -18,6 +19,20 @@
       when: jh_os_installed.changed
       ansible.builtin.apt:
         update_cache: true
+
+- name: Add secrets group
+  block:
+    - name: Add secrets group
+      ansible.builtin.group:
+        name: jh_secrets
+        state: present
+    - name: Create restricted folder
+      ansible.builtin.file:
+        path: /etc/jehon/restricted/
+        state: directory
+        owner: root
+        group: jh_secrets
+        mode: "0755"
 
 - name: Add jh_pcloud
   ansible.builtin.include_role:
