@@ -3,6 +3,11 @@
 SWD="$(dirname "${BASH_SOURCE[0]}")"
 ROOT="$(dirname "$SWD")"
 
+if [ -r /etc/jehon/restricted/ansible-key ]; then
+    mkdir -p "$SWD/built"
+    ln -sfv /etc/jehon/restricted/ansible-key "$SWD"/built/ansible-key
+fi
+
 cd "$SWD"
 
 sudo PYTHONPATH="../.python" "../.python/bin/ansible-playbook" setup.yml --limit dev
