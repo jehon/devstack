@@ -16,11 +16,11 @@ services:
     #     ports:
     #         - 127.0.0.1:9000:80
 
-    jenkins-master:
+    jenkins:
         # Thanks to https://gist.github.com/pythoninthegrass/abb755a54ba908374e1c8bfd79d0c499
         # Image doc: https://github.com/jenkinsci/docker/blob/master/README.md
         build:
-            context: jenkins-master
+            context: jenkins
             dockerfile: Dockerfile
         restart: unless-stopped
         command: --prefix=/jenkins
