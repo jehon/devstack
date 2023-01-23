@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<jenkins.branch.OrganizationFolder plugin="branch-api@2.1051.v9985666b_f6cc">
+<jenkins.branch.OrganizationFolder plugin="branch-api@2.1071.v1a_188a_562481">
   <actions/>
   <description>All github projets</description>
   <displayName>GitHub</displayName>
@@ -29,6 +29,7 @@
     </jenkins.branch.OrganizationChildTriggersProperty>
     <jenkins.branch.NoTriggerOrganizationFolderProperty>
       <branches>.*</branches>
+      <strategy>NONE</strategy>
     </jenkins.branch.NoTriggerOrganizationFolderProperty>
   </properties>
   <folderViews class="jenkins.branch.OrganizationFolderViewHolder">
@@ -44,13 +45,18 @@
     <numToKeep>10</numToKeep>
     <abortBuilds>false</abortBuilds>
   </orphanedItemStrategy>
-  <triggers/>
+  <triggers>
+    <com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger plugin="cloudbees-folder@6.800.v71307ca_b_986b">
+      <spec>H H/4 * * *</spec>
+      <interval>86400000</interval>
+    </com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger>
+  </triggers>
   <disabled>false</disabled>
   <navigators>
-    <org.jenkinsci.plugins.github__branch__source.GitHubSCMNavigator plugin="github-branch-source@1696.v3a_7603564d04">
+    <org.jenkinsci.plugins.github__branch__source.GitHubSCMNavigator plugin="github-branch-source@1701.v00cc8184df93">
       <repoOwner>jehon</repoOwner>
       <apiUri>https://api.github.com</apiUri>
-      <credentialsId>github-app-jehon</credentialsId>
+      <credentialsId>a86b1209-4511-4ddf-a895-265c7f9402dd</credentialsId>
       <traits>
         <org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait>
           <strategyId>1</strategyId>
@@ -58,7 +64,7 @@
         <org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
           <strategyId>2</strategyId>
         </org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait>
-        <jenkins.plugins.git.traits.SubmoduleOptionTrait plugin="git@4.14.3">
+        <jenkins.plugins.git.traits.SubmoduleOptionTrait plugin="git@5.0.0">
           <extension class="hudson.plugins.git.extensions.impl.SubmoduleOption">
             <disableSubmodules>false</disableSubmodules>
             <recursiveSubmodules>true</recursiveSubmodules>
