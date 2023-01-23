@@ -13,5 +13,8 @@
     ],
     "files.associations": {
         "Makefile.*": "makefile"
-    }
+    },
+    "yaml.customTags": [
+        "!vault"
+    ]
 }
