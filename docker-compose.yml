@@ -40,6 +40,8 @@ services:
             timeout: 15s
             retries: 10
             start_period: 30s
+        environment:
+            PLUGINS_FORCE_UPGRADE: true
 
     jenkins_agent1:
         # Doc: https://hub.docker.com/r/jenkins/inbound-agent
