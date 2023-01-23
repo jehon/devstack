@@ -2,12 +2,10 @@
 
 set -o errexit
 
-. /usr/bin/jh-lib
-DS_ROOT="$( dirname "$JH_SWD" )"
+SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+. "$SWD"/jenkins-lib.sh
 
-. "$JH_SWD"/jenkins-bin/jenkins-lib.sh
 . "$DS_ROOT/ansible/lib.sh"
-
 
 #
 # About ? 
