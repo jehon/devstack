@@ -1,13 +1,6 @@
 #
-# See https://hub.docker.com/u/jenkins
-# - https://hub.docker.com/r/jenkins/jenkins
-# - https://hub.docker.com/r/jenkins/jnlp-slave
-# - https://hub.docker.com/r/jenkins/jnlp-agent-docker
 # - https://stackoverflow.com/a/39150040/1954789 (stdin / tty)
 #
-# Thanks to https://gist.github.com/pythoninthegrass/abb755a54ba908374e1c8bfd79d0c499
-
-version: "3.8"
 
 #volumes:
     # sonar_data:
@@ -24,25 +17,29 @@ services:
     #         - 127.0.0.1:9000:80
 
     jenkins-master:
-        # https://github.com/jenkinsci/docker/blob/master/README.md
-        # https://hub.docker.com/r/jenkins/jenkins
-        # depends_on: 
-        #     - apache
+        # Thanks to https://gist.github.com/pythoninthegrass/abb755a54ba908374e1c8bfd79d0c499
+        # Image doc: https://github.com/jenkinsci/docker/blob/master/README.md
         build:
             context: jenkins-master
             dockerfile: Dockerfile
         restart: unless-stopped
         command: --prefix=/jenkins
         volumes:
+            # Export configs
             - type: bind
               source: /mnt/docker/jenkins
               target: /mnt/docker/jenkins
-              # Export configs
         ports:
             - 8080:8080
         expose:
             - 50000
             - 8080
+        healthcheck:
+            test: curl -fs http://localhost:8080/jenkins/tcpSlaveAgentListener --output /dev/null
+            interval: 15s
+            timeout: 15s
+            retries: 10
+            start_period: 30s
 
     # jenkins_agent_1:
     #     # https://hub.docker.com/r/jenkins/inbound-agent
