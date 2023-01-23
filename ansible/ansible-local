@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
 SWD="$(dirname "${BASH_SOURCE[0]}")"
+ROOT="$(dirname "$SWD")"
 
-sudo PYTHONPATH="$SWD/../.python" "$SWD/../.python/bin/ansible-playbook" setup.yml --limit dev
+cd "$SWD"
+
+sudo PYTHONPATH="../.python" "../.python/bin/ansible-playbook" setup.yml --limit dev
