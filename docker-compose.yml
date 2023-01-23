@@ -41,7 +41,7 @@ services:
             retries: 10
             start_period: 30s
 
-    jenkins_slave1:
+    jenkins_agent1:
         # Doc: https://hub.docker.com/r/jenkins/inbound-agent
         # Doc: https://hub.docker.com/r/jenkins/jnlp-slave
         # Image: https://hub.docker.com/r/jenkins/jnlp-agent-docker
@@ -53,7 +53,8 @@ services:
         # privileged: true
         environment:
             JENKINS_URL: http://jenkins:8080/jenkins/
-            JENKINS_AGENT_NAME: slave1
+            JENKINS_AGENT_NAME: agent1
+            JENKINS_SECRET: 6c86d6d579a8c4cd873c8d9000efe7857bb87ad0b699891f39d19e674b946804   
         # volumes:
         #     - /var/run/docker.sock:/var/run/docker.sock
 
