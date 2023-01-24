@@ -16,24 +16,25 @@ mkdir -p "$EXPORT"
 docker compose cp jenkins:/var/jenkins_home/ "$EXPORT/"
 echo "## Extract configs (into $EXPORT) done"
 
+rsyncCopy() {
+    NAME="$1"
+    shift
+    echo "### $NAME"
+    rsync --prune-empty-dirs --archive \
+        --delete --delete-excluded \
+        "$@" \
+        "$EXPORT/jenkins_home/$NAME/" "$CONFIG/raw/$NAME/"
+}
+
 echo "## Backup raw data..."
-echo "### jobs"
-rsync --prune-empty-dirs --archive \
+rsyncCopy "jobs" \
     --exclude "changelog.xml" --exclude "builds" \
     --include="*.xml" --include="*/" \
     --exclude="*" \
-    --delete --delete-excluded \
-    "$EXPORT/jenkins_home/jobs/" "$CONFIG/raw/jobs/"
 
-echo "### nodes"
-rsync --prune-empty-dirs --archive \
-    --delete --delete-excluded \
-    "$EXPORT/jenkins_home/nodes/" "$CONFIG/raw/nodes/"
-
-echo "### users"
-rsync --prune-empty-dirs --archive \
-    --delete --delete-excluded \
-    "$EXPORT/jenkins_home/users/" "$CONFIG/raw/users/"
+rsyncCopy "nodes"
+rsyncCopy "users" \
+    --exclude apiTokenStats.xml \
 
 echo "### others xml"
 cp "$EXPORT/jenkins_home/"*.xml "$CONFIG/raw/"
