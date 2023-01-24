@@ -25,4 +25,4 @@ if [ ! -r jenkins/built/secrets/master.key ]; then
     cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
 fi
 
-dc up --build "${OPTS[@]}"
+dc up --remove-orphans --build "${OPTS[@]}"
