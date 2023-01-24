@@ -5,6 +5,11 @@ set -o pipefail
 
 ROOT="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
 
+mkdir -p jenkins/built/secrets
+if [ ! -r jenkins/built/secrets/master.key ]; then
+    cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
+fi
+
 dc() {
     docker compose --env-file=/etc/jehon/restricted/jenkins.env "$@"
 }
@@ -18,11 +23,5 @@ case "$1" in
         OPTS=( "-d" )
         ;;
 esac
-
-mkdir -p jenkins/built/secrets
-
-if [ ! -r jenkins/built/secrets/master.key ]; then
-    cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
-fi
 
 dc up --remove-orphans --build "${OPTS[@]}"
