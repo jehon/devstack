@@ -10,4 +10,5 @@ fi
 
 cd "$SWD"
 
+echo "Starting as sudo"
 sudo PYTHONPATH="../.python" "../.python/bin/ansible-playbook" setup.yml --limit dev
