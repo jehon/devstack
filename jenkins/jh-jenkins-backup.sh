@@ -33,8 +33,10 @@ rsyncCopy "jobs" \
     --exclude="*" \
 
 rsyncCopy "nodes"
+
 rsyncCopy "users" \
-    --exclude apiTokenStats.xml \
+    --exclude apiTokenStats.xml
+
 
 echo "### others xml"
 cp "$EXPORT/jenkins_home/"*.xml "$CONFIG/raw/"
