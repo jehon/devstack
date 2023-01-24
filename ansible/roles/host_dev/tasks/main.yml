@@ -72,7 +72,6 @@
 
         - name: "Install jenkins {{ item }}"
           with_items:
-            - hudson.util.Secret
             - master.key
             - env.sh
           ansible.builtin.template:

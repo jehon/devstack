@@ -2,6 +2,5 @@
 
 ## Backup secret's key
 
-Backup two files:
-- hudson.util.Secret
+Backup file:
 - master.key

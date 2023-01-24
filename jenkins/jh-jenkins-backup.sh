@@ -37,6 +37,8 @@ rsyncCopy "nodes"
 rsyncCopy "users" \
     --exclude apiTokenStats.xml
 
+rsyncCopy "secrets" \
+    --exclude master.key
 
 echo "### others xml"
 cp "$EXPORT/jenkins_home/"*.xml "$CONFIG/raw/"
