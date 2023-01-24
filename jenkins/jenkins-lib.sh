@@ -28,7 +28,7 @@ fi
 
 jenkins_cli() {
     # Need JENKINS_URL
-    java -jar "$JENKINS_JAR" -s "$JENKINS_URL" -webSocket -auth "${JENKINS_SYSTEM_USER}:${JENKINS_SYSTEM_KEY}" "jehon:password" "$@"
+    java -jar "$JENKINS_JAR" -s "$JENKINS_URL" -webSocket -auth "${JENKINS_SYSTEM_USER}:${JENKINS_SYSTEM_KEY}" "$@"
 }
 
 jenkins_check() {

@@ -37,9 +37,6 @@ RUN apt-get update && apt-get install -y rsync curl docker.io
 #####################################################
 USER jenkins
 
-# Add helper scripts
-ADD ./jenkins-bin /jenkins-bin
-
 # Add generated
 ADD --chown=jenkins built/ ${JENKINS_REF}/
 

@@ -24,11 +24,6 @@ services:
             dockerfile: Dockerfile
         restart: unless-stopped
         command: --prefix=/jenkins
-        volumes:
-            # Export configs
-            - type: bind
-              source: /mnt/docker/jenkins
-              target: /mnt/docker/jenkins
         ports:
             - 8080:8080
         expose:
