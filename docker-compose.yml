@@ -13,7 +13,6 @@ services:
         command:
             - "--api.insecure=true"
             - "--providers.docker=true"
-            # - "--providers.docker.exposedbydefault=true"
             - "--entrypoints.web.address=:80"
         ports:
             - "80:80"
@@ -21,6 +20,20 @@ services:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
         labels:
+            - traefik.protocol=http
+            - traefik.http.middlewares.jhstriproot.stripprefix.prefixes=/[a-zA-Z0-9_-]+/
+
+    httpd:
+        image: httpd:alpine
+        restart: always
+        expose: 
+            - 80
+        volumes:
+            - ./httpd:/usr/local/apache2/htdocs/:ro
+        labels:
+            - traefik.http.routers.httpd.rule=PathPrefix(`/`)
+#            - traefik.http.services.maildev.loadbalancer.server.port=1080
+
     maildev:
         # https://github.com/maildev/maildev
         image: maildev/maildev
@@ -33,9 +46,8 @@ services:
             # - 1025
         labels:
             # https://github.com/maildev/maildev/issues/402
-            - traefik.http.middlewares.strip-maildev.stripprefix.prefixes=/maildev
             - traefik.http.routers.maildev.rule=PathPrefix(`/maildev`)
-            - traefik.http.routers.maildev.middlewares=strip-maildev@docker
+            - traefik.http.routers.maildev.middlewares=jhstriproot@docker
             - traefik.http.services.maildev.loadbalancer.server.port=1080
 
     portainer:
@@ -49,9 +61,8 @@ services:
         expose:
             - 9000
         labels:
-            - traefik.http.middlewares.strip-portainer.stripprefix.prefixes=/portainer
             - traefik.http.routers.portainer.rule=PathPrefix(`/portainer`)
-            - traefik.http.routers.portainer.middlewares=strip-portainer@docker
+            - traefik.http.routers.portainer.middlewares=jhstriproot@docker
             - traefik.http.services.portainer.loadbalancer.server.port=9000
 
     jenkins:
@@ -92,7 +103,7 @@ services:
         # volumes:
         #     - /var/run/docker.sock:/var/run/docker.sock
         labels:
-            - "traefik.enable=false"
+            - traefik.enable=false
 
     # sonar:
     #     build:
