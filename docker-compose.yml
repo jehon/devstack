@@ -21,8 +21,8 @@ services:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
         labels:
             - traefik.protocol=http
-            - traefik.http.middlewares.jhstriproot.stripprefix.prefixes=/[a-zA-Z0-9_-]+/
-
+            - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
+            
     httpd:
         image: httpd:alpine
         restart: always
