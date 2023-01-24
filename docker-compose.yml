@@ -25,6 +25,7 @@ services:
 
     portainer:
         image: portainer/portainer-ce:latest
+        restart: always
         # Need to escape all '$' into '$$'
         command: --admin-password='$$2y$$05$$s5BtawHyEHa1fYr9gfeYNOZd8/JAPeAUVfmFlvjGJpNVasmbulNEe'
         privileged: true
