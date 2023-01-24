@@ -5,10 +5,14 @@ set -o pipefail
 
 ROOT="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
 
+dc() {
+    docker compose --env-file=/etc/jehon/restricted/jenkins.env "$@"
+}
+
 case "$1" in
     "-f" )
-        docker compose down
-        docker compose rm
+        dc down
+        dc rm
         ;;
     "-d" )
         OPTS=( "-d" )
@@ -21,4 +25,4 @@ if [ ! -r jenkins/built/secrets/master.key ]; then
     cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
 fi
 
-docker compose --env-file=/etc/jehon/restricted/jenkins.env up --build "${OPTS[@]}"
+dc up --build "${OPTS[@]}"
