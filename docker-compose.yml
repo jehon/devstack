@@ -32,7 +32,6 @@ services:
             - ./httpd:/usr/local/apache2/htdocs/:ro
         labels:
             - traefik.http.routers.httpd.rule=PathPrefix(`/`)
-#            - traefik.http.services.maildev.loadbalancer.server.port=1080
 
     maildev:
         # https://github.com/maildev/maildev
