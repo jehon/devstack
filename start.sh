@@ -14,14 +14,16 @@ dc() {
     docker compose --env-file=/etc/jehon/restricted/jenkins.env "$@"
 }
 
+OPTS=( )
 case "$1" in
     "-f" )
         dc down
         dc rm
+        OPTS+="--build"
         ;;
     "-d" )
-        OPTS=( "-d" )
+        OPTS+="-d"
         ;;
 esac
 
-dc up --remove-orphans --build "${OPTS[@]}"
+dc up --remove-orphans "${OPTS[@]}"
