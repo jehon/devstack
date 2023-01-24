@@ -40,7 +40,7 @@ services:
         labels:
             - traefik.http.routers.httpd.rule=PathPrefix(`/`)
 
-    maildev:
+    mail:
         # https://github.com/maildev/maildev
         image: maildev/maildev
         restart: always
@@ -49,12 +49,12 @@ services:
             - MAILDEV_WEB_PORT=1080
         expose:
             - 1080
-            # - 1025
+            - 1025
         labels:
             # https://github.com/maildev/maildev/issues/402
-            - traefik.http.routers.maildev.rule=PathPrefix(`/maildev`)
-            - traefik.http.routers.maildev.middlewares=jhstriproot@docker
-            - traefik.http.services.maildev.loadbalancer.server.port=1080
+            - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
+            - traefik.http.routers.mail.middlewares=jhstriproot@docker
+            - traefik.http.services.mail.loadbalancer.server.port=1080
 
     portainer:
         image: portainer/portainer-ce:latest
