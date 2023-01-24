@@ -12,10 +12,10 @@ case "$1" in
         ;;
 esac
 
+mkdir -p jenkins/built/secrets
+
 if [ ! -r jenkins/built/secrets/master.key ]; then
-    mkdir -p jenkins/built/secrets
-    sudo rsync -r /etc/jehon/restricted/jenkins/ jenkins/built/secrets 
-    sudo chown -R jehon:jehon jenkins/built/
+    cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
 fi
 
 docker compose up --build

@@ -52,34 +52,15 @@
         - cryptomedic.php
         - cryptomedic.sh
         - dev.sh
+        - jenkins-master.key
+        - jenkins.env
         - tmdb.key
       ansible.builtin.template:
         src: "{{ item }}"
         dest: /etc/jehon/restricted/{{ item }}
         owner: root
         group: jh_secrets
-        mode: "0755"
-
-    - name: Install Jenkins
-      block:
-        - name: Create jenkins folder
-          ansible.builtin.file:
-            path: /etc/jehon/restricted/jenkins
-            state: directory
-            owner: root
-            group: jh_secrets
-            mode: "0755"
-
-        - name: "Install jenkins {{ item }}"
-          with_items:
-            - master.key
-            - env.sh
-          ansible.builtin.template:
-            src: jenkins/{{ item }}
-            dest: /etc/jehon/restricted/jenkins/{{ item }}
-            owner: root
-            group: jh_secrets
-            mode: "0755"
+        mode: "0640"
 
     - name: Install /mnt/docker/jenkins
       ansible.builtin.file:

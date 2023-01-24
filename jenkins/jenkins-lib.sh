@@ -11,8 +11,8 @@ export JENKINS_GUEST_HOME="/var/jenkins_home"
 export JENKINS_URL="http://localhost:8080/jenkins"
 export DS_ROOT="$SWD/../"
 
-if [ -r /etc/jehon/restricted/jenkins/env.sh ]; then
-    . /etc/jehon/restricted/jenkins/env.sh
+if [ -r /etc/jehon/restricted/jenkins.env ]; then
+    . /etc/jehon/restricted/jenkins.env
 fi
 
 mkdir -p "$TMP"
