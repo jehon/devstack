@@ -16,13 +16,20 @@ services:
             - "--entrypoints.web.address=:80"
         ports:
             - "80:80"
-            - "81:8080"
+            #- "81:8080"
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
         labels:
             - traefik.protocol=http
             - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
             
+            - traefik.http.routers.api.rule=PathPrefix(`/api`)
+            - traefik.http.routers.api.service=api@internal
+
+            - traefik.http.routers.dashboard.rule=PathPrefix(`/dashboard`)
+            - traefik.http.routers.dashboard.service=dashboard@internal
+            - traefik.http.routers.dashboard.middlewares=jhstriproot@docker
+
     httpd:
         image: httpd:alpine
         restart: always
