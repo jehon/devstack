@@ -18,4 +18,4 @@ if [ ! -r jenkins/built/secrets/master.key ]; then
     cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
 fi
 
-docker compose up --build
+docker compose --env-file=/etc/jehon/restricted/jenkins.env up --build
