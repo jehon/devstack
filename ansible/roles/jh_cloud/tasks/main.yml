@@ -67,7 +67,7 @@
         state: absent
       notify: jh_cloud.remount
 
-- name: Enable service
+- name: Enable cloud mount service
   when: jh_is_full_machine
   with_items: "{{ mount_list }}"
   vars:
