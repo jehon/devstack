@@ -32,7 +32,7 @@ OPTS=( )
 case "$1" in
     "-f" )
         runDockerCompose down
-        runDockerCompose rm
+        runDockerCompose rm -f
         OPTS+="--build"
         ;;
     "-d" )
