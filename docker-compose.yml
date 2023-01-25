@@ -108,12 +108,10 @@ services:
         environment:
             JENKINS_URL: http://jenkins:8080/jenkins/
             JENKINS_AGENT_NAME: agent1
-            JENKINS_SECRET: ${JENKINS_AGENT1_TOKEN}    
+            JENKINS_SECRET: ${JENKINS_AGENT1_TOKEN}
         volumes:
-            - type: tmpfs
-              target: /home/jenkins/.jenkins
-            - type: tmpfs
-              target: /home/jenkins/agent
+            - jenkins_agent_cache:/home/jenkins/.jenkins
+            - jenkins_agent_workdir:/home/jenkins/agent
         #     - /var/run/docker.sock:/var/run/docker.sock
         labels:
             - traefik.enable=false
@@ -135,3 +133,5 @@ volumes:
     portainer:
     sonar_data:
     jenkins_home:
+    jenkins_agent_cache:
+    jenkins_agent_workdir:
