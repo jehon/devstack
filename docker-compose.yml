@@ -107,7 +107,11 @@ services:
             JENKINS_URL: http://jenkins:8080/jenkins/
             JENKINS_AGENT_NAME: agent1
             JENKINS_SECRET: ${JENKINS_AGENT1_TOKEN}    
-        # volumes:
+        volumes:
+            - type: tmpfs
+              target: /home/jenkins/.jenkins
+            - type: tmpfs
+              target: /home/jenkins/agent
         #     - /var/run/docker.sock:/var/run/docker.sock
         labels:
             - traefik.enable=false
