@@ -1,5 +1,6 @@
 ansicolor
 blueocean
 pipeline-github
+sonar
 sshd
 ws-cleanup
