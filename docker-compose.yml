@@ -119,6 +119,19 @@ services:
         labels:
             - traefik.enable=false
 
+    sonar:
+        image: sonarqube:community
+        volumes:
+            - sonar_data:/opt/sonarqube/data
+            - ./sonar/extensions:/opt/sonarqube/extensions
+        environment:
+            SONAR_WEB_CONTEXT: "/sonar"
+            SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: true
+        expose:
+            - 9000
+        labels:
+            - traefik.http.routers.sonar.rule=PathPrefix(`/sonar`)
+
 volumes:
     portainer:
     sonar_data:
