@@ -17,7 +17,7 @@ TARGET="$PRJ_TMP/jenkins"
 mkdir -p "$TARGET"
 
 echo "## Backup secrets..."
-docker compose cp "$JENKINS_DOCKER_NAME:$JENKINS_GUEST_HOME/secrets/master.key" "$TARGET/"
+runDockerCompose cp "$JENKINS_DOCKER_NAME:$JENKINS_GUEST_HOME/secrets/master.key" "$TARGET/"
 echo "## Backup secrets done"
 
 echo "# Encrypting master.key..."
