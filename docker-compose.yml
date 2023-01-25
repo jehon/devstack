@@ -130,8 +130,7 @@ services:
             - traefik.http.routers.sonar.rule=PathPrefix(`/sonar`)
 
 volumes:
-    portainer:
-    sonar_data:
     jenkins_home:
     jenkins_agent_cache:
     jenkins_agent_workdir:
+    portainer:
