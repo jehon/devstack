@@ -91,8 +91,7 @@ services:
         environment:
             PLUGINS_FORCE_UPGRADE: true
         volumes:
-            - type: tmptfs
-              target: /var/jenkins_home
+            - jenkins_home:/var/jenkins_home
         labels:
             - traefik.http.routers.jenkins.rule=PathPrefix(`/jenkins`)
 
@@ -135,3 +134,4 @@ services:
 volumes:
     portainer:
     sonar_data:
+    jenkins_home:
