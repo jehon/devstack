@@ -3,5 +3,4 @@ blueocean
 locale
 pipeline-github
 sonar
-sshd
 ws-cleanup
