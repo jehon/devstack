@@ -119,16 +119,6 @@ services:
         labels:
             - traefik.enable=false
 
-    # sonar:
-    #     build:
-    #         context: .
-    #         dockerfile: sonar/Dockerfile
-    ##     volumes:
-    ##         - sonar_data:/opt/sonarqube/data
-    ##         - sonar_extensions:/opt/sonarqube/extensions
-    #     environment:
-    #         SONAR_WEB_CONTEXT: "/sonar"
-    #         # SONAR_WEB_PORT: 9080
-    #         SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: 1
-    #     expose:
-    #         - 9000
+volumes:
+    portainer:
+    sonar_data:
