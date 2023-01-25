@@ -2,7 +2,7 @@
 <slave>
   <name>agent1</name>
   <description></description>
-  <remoteFS>/mnt/jenkins/slave/</remoteFS>
+  <remoteFS>/home/jenkins/agent/</remoteFS>
   <numExecutors>1</numExecutors>
   <mode>NORMAL</mode>
   <retentionStrategy class="hudson.slaves.RetentionStrategy$Always"/>
