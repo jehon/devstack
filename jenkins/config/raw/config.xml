@@ -3,6 +3,7 @@
   <disabledAdministrativeMonitors>
     <string>jenkins.diagnostics.SecurityIsOffMonitor</string>
     <string>jenkins.diagnostics.ControllerExecutorsAgents</string>
+    <string>hudson.diagnosis.ReverseProxySetupMonitor</string>
   </disabledAdministrativeMonitors>
   <version>2.375.2</version>
   <numExecutors>1</numExecutors>
