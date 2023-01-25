@@ -12,5 +12,5 @@ export PRJ_TMP
 mkdir -p "$PRJ_TMP"
 
 runDockerCompose() {
-    docker compose --env-file=/etc/jehon/restricted/jenkins.env "$@"
+    docker compose --project-directory "$PRJ_ROOT" --env-file=/etc/jehon/restricted/jenkins.env "$@"
 }
