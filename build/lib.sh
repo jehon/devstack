@@ -3,8 +3,8 @@
 set -o errexit
 set -o pipefail
 
-SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
-PRJ_ROOT="$( dirname "$SWD" )"
+PRJ_ROOT="$( dirname "$(realpath "$( dirname "${BASH_SOURCE[0]}")")" )"
+PRJ_TMP="$PRJ_ROOT/tmp"
 
 export PRJ_ROOT
 

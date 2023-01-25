@@ -2,14 +2,13 @@
 
 . /usr/bin/jh-lib
 
-SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+. "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/../build/lib.sh
 
-export TMP="$SWD/../tmp/jenkins"
+export TMP="$PRJ_TMP/jenkins"
 export JENKINS_JAR="$TMP/jenkins-cli.jar"
 export JENKINS_DOCKER_NAME="jenkins"
 export JENKINS_GUEST_HOME="/var/jenkins_home"
 export JENKINS_URL="http://localhost/jenkins/"
-export DS_ROOT="$SWD/../"
 
 if [ -r /etc/jehon/restricted/jenkins.env ]; then
     . /etc/jehon/restricted/jenkins.env

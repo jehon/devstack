@@ -13,7 +13,7 @@ CONFIG="$SWD/config"
 echo "## Extract configs (into $EXPORT)..."
 rm -fr "$EXPORT"
 mkdir -p "$EXPORT"
-docker compose cp jenkins:/var/jenkins_home/ "$EXPORT/"
+runDockerCompose cp jenkins:/var/jenkins_home/ "$EXPORT/"
 echo "## Extract configs (into $EXPORT) done"
 
 rsyncCopy() {
