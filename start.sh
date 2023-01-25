@@ -4,6 +4,7 @@ set -o errexit
 set -o pipefail
 
 ROOT="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+cd "$ROOT"
 
 mkdir -p jenkins/built/secrets
 if [ ! -r jenkins/built/secrets/master.key ]; then
