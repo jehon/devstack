@@ -1,3 +1,4 @@
 [submodule "httpd"]
 	path = httpd
 	url = ../jehon.github.io.git
+	branch = main
