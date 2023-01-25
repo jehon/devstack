@@ -63,7 +63,8 @@ all:
 
         # 00:00:00:00:00:1f
         # Detected by docker host
-        dev: fe80::200:ff:fe00:1f
+        # dev: fe80::200:ff:fe00:1f
+        dev: 127.0.0.1
 
         # For WSL:
         wsl-master: 127.0.1.1

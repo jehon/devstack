@@ -4,8 +4,14 @@
   gather_facts: false
 
   tasks:
+    - name: Create folder
+      ansible.builtin.file:
+        state: directory
+        path: ../httpd/built/
+        mode: "0777"
+
     - name: generate dev-config.yml for github homepage
       ansible.builtin.template:
         src: "templates/setup-dev-config.json"
-        dest: "../tmp/dev-config.json"
+        dest: "../httpd/built/dev-config.json"
         mode: "0644"
