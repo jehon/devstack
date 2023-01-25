@@ -78,7 +78,7 @@ services:
         build:
             context: jenkins
             dockerfile: Dockerfile
-        restart: unless-stopped
+        restart: always
         command: --prefix=/jenkins
         expose:
             - 8080
@@ -87,7 +87,7 @@ services:
             interval: 15s
             timeout: 15s
             retries: 10
-            start_period: 30s
+            start_period: 60s
         environment:
             PLUGINS_FORCE_UPGRADE: true
         volumes:
@@ -103,7 +103,7 @@ services:
         depends_on:
             jenkins:
                 condition: service_healthy
-        restart: unless-stopped
+        restart: always
         image: jenkins/inbound-agent
         # privileged: true
         environment:
