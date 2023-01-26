@@ -64,5 +64,5 @@ Jenkins.instance.pluginManager.plugins
     }
 EOS
 
-) | tee "$EXPORT"/plugins.tmp | sed "s/:.*//" >"$CONFIG"/plugins.txt
+) | tee "$EXPORT"/plugins.tmp | sed "s/:.*//" >"$CONFIG"/plugins.raw.txt
 echo "## Building plugins list done"
