@@ -1,5 +1,6 @@
 ansicolor
 blueocean
+display-console-output
 locale
 pipeline-github
 sonar
