@@ -4,7 +4,7 @@
     <hudson.plugins.sonar.SonarInstallation>
       <name>local</name>
       <serverUrl>http://sonar:9000/sonar/</serverUrl>
-      <credentialsId></credentialsId>
+      <credentialsId>Sonar</credentialsId>
       <webhookSecretId></webhookSecretId>
       <mojoVersion></mojoVersion>
       <additionalProperties></additionalProperties>
