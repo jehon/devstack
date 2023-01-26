@@ -134,3 +134,4 @@ volumes:
     jenkins_agent_cache:
     jenkins_agent_workdir:
     portainer:
+    sonar_data:
