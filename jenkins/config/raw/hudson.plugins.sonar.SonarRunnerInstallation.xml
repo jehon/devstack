@@ -2,7 +2,7 @@
 <hudson.plugins.sonar.SonarRunnerInstallation_-DescriptorImpl plugin="sonar@2.15">
   <installations>
     <hudson.plugins.sonar.SonarRunnerInstallation>
-      <name>jenkins</name>
+      <name>sonar_scanner</name>
       <properties>
         <hudson.tools.InstallSourceProperty>
           <installers>
