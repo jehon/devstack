@@ -103,7 +103,7 @@ services:
             jenkins:
                 condition: service_healthy
         restart: always
-        image: jenkins/inbound-agent
+        build: jenkins-agent
         # privileged: true
         environment:
             JENKINS_URL: http://jenkins:8080/jenkins/
