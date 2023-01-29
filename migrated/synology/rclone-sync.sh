@@ -26,11 +26,14 @@ syncOne() {
 	# https://rclone.org/filtering/
 	# https://rclone.org/docs/
 	#
+	# --stats 99d: print stats only every 99 days (https://forum.rclone.org/t/can-we-have-rsync-kind-of-logs-with-rclone/9110/2?u=jehon)
+	#
 	#
 
 	"$TMP"/rclone/rclone sync \
 		--verbose \
 		pcloud:/"$SOURCE" "$TARGET" \
+		--stats 99d \
 		--track-renames --transfers=1 --max-backlog 200000 \
 		--exclude "@eaDir" --exclude "@eaDir/**"
 
