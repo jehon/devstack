@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+ROOT="$SWD"
+ANSIBLE="$ROOT/ansible"
+
+if [ -r /etc/jehon/restricted/ansible-key ]; then
+    mkdir -p "$ANSIBLE/built"
+    ln -sfv /etc/jehon/restricted/ansible-key "$ANSIBLE"/built/ansible-key
+fi
+
+echo "Starting as sudo"
+cd "$ANSIBLE" && sudo PYTHONPATH="$ROOT/.python" "$ROOT/.python/bin/ansible-playbook" setup.yml --limit dev
