@@ -2,13 +2,12 @@
 
 set -o errexit
 set -o pipefail
+shopt -s nullglob
 
-SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
+. "$(realpath "$( dirname "${BASH_SOURCE[0]}")")"/../build/jenkins-lib.sh
 
-. "$SWD"/jenkins-lib.sh
-
-EXPORT="$TMP/export"
-CONFIG="$SWD/config"
+CONFIG="$JENKINS_ROOT/config"
+EXPORT="$JENKINS_TMP/export"
 
 echo "## Extract configs (into $EXPORT)..."
 rm -fr "$EXPORT"

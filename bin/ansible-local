@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o pipefail
+shopt -s nullglob
+
 SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
-ROOT="$( dirname "$SWD" )"
-ANSIBLE="$ROOT/ansible"
+
+. "$SWD/../build/lib.sh"
+
+PRJ_ANSIBLE="$PRJ_ROOT/ansible"
 
 if [ -r /etc/jehon/restricted/ansible-key ]; then
-    mkdir -p "$ANSIBLE/built"
-    ln -sfv /etc/jehon/restricted/ansible-key "$ANSIBLE"/built/ansible-key
+    mkdir -p "$PRJ_ANSIBLE/built"
+    ln -sfv /etc/jehon/restricted/ansible-key "$PRJ_ANSIBLE"/built/ansible-key
 fi
 
 echo "Starting as sudo"
-cd "$ANSIBLE" && sudo PYTHONPATH="$ROOT/.python" "$ROOT/.python/bin/ansible-playbook" setup.yml --limit dev
+cd "$PRJ_ANSIBLE" && sudo PYTHONPATH="$PRJ_ROOT/.python" "$PRJ_ROOT/.python/bin/ansible-playbook" setup.yml --limit dev

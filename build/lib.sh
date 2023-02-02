@@ -4,10 +4,8 @@ set -o errexit
 set -o pipefail
 
 PRJ_ROOT="$( dirname "$(realpath "$( dirname "${BASH_SOURCE[0]}")")" )"
-PRJ_TMP="$PRJ_ROOT/tmp"
-
 export PRJ_ROOT
-export PRJ_TMP
+export PRJ_TMP="$PRJ_ROOT/tmp"
 
 mkdir -p "$PRJ_TMP"
 
