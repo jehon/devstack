@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
-ROOT="$SWD"
+ROOT="$( dirname "$SWD" )"
 ANSIBLE="$ROOT/ansible"
 
 if [ -r /etc/jehon/restricted/ansible-key ]; then
