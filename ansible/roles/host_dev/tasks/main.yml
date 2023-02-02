@@ -45,7 +45,8 @@
       ansible.builtin.file:
         path: /mnt/docker
         state: directory
-        mode: "0755"
+        mode: "0775"
+        group: jh_secrets
 
     - name: Install secrets files
       with_items:
