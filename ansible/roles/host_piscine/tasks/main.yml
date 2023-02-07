@@ -9,5 +9,3 @@
     pkg:
       - jehon
       - jehon-service-music
-      - jehon-service-network
-      - jehon-service-display

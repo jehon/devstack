@@ -7,9 +7,7 @@
 - name: Install packages
   ansible.builtin.apt:
     pkg:
-      - jehon-service-display
       - jehon-service-music
-      - jehon-service-network
       - jehon-service-kiosk
 
 - name: Install kiosk config file
