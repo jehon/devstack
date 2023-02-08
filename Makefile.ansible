@@ -86,7 +86,7 @@ $(ANSIBLE_PRJ)/built/ansible-ssh-key:
 	fi
 
 $(ANSIBLE_TMP)/.built: .python/.built \
-		$(shell find ansible/ | grep -v .galaxy ) \
+		$(shell find ansible/ | grep -v .galaxy | grep -v built) \
 		$(ANSIBLE_GALAXY)/.done
 
 	@mkdir -p "$(ANSIBLE_TMP)"
