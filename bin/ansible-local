@@ -15,11 +15,9 @@ if [ -r /etc/jehon/restricted/ansible-encryption-key ]; then
     ln -sfv /etc/jehon/restricted/ansible-encryption-key "$PRJ_ANSIBLE"/built/ansible-encryption-key
 fi
 
-cd "$PRJ_ROOT"
-
 echo "Installing dependencies"
-make ansible-dependencies
+make --directory "$PRJ_ROOT" ansible-dependencies
 
 echo "Starting as sudo"
-cd ansible
+cd "$PRJ_ANSIBLE"
 sudo PYTHONPATH="$PRJ_ROOT/.python" "$PRJ_ROOT/.python/bin/ansible-playbook" setup.yml --limit dev
