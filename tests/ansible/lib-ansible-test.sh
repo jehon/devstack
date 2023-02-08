@@ -47,7 +47,7 @@ test_in_docker() {
 	) | docker run --rm --interactive  \
 			-v "$PRJ_ROOT:$REMOTE_PRJ" \
 			-v "$PRJ_ROOT/tmp/ansible/00-all_vars.yml:$REMOTE_PRJ/ansible/inventory/00-all_vars.yml" \
-			--tmpfs "$REMOTE_PRJ/.python" \
+			--tmpfs "$REMOTE_PRJ/.python:exec" \
 			--tmpfs "$REMOTE_PRJ/ansible/.galaxy" \
 			--tmpfs "$REMOTE_PRJ/ansible/built" \
 			--tmpfs "$REMOTE_PRJ/tmp" \
