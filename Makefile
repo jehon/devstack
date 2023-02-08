@@ -71,8 +71,6 @@ dump:
 	$(call dump_info,PWD,$(shell pwd))
 	$(call dump_info,ROOT)
 	$(call dump_info,TMP_ROOT)
-	$(call dump_info,REPO)
-	$(call dump_info,VERSION)
 	$(call dump_info,PATH)
 	$(call dump_info,PYTHONPATH)
 	$(call dump_space)
