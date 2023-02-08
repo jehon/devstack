@@ -54,13 +54,14 @@ ansible-clean:
 ansible-build: ansible-dependencies
 
 .PHONY: ansible-dependencies
-ansible-dependencies: .python/ \
+ansible-dependencies: .python/.built \
 	$(ANSIBLE_PRJ)/built/ansible-encryption-key \
 	$(ANSIBLE_PRJ)/built/ansible-ssh-key \
 	$(ANSIBLE_TMP)/.built
 
-.python/:
+.python/.built:
 	cd $(ROOT) && pip install --upgrade --target "$(PRJ_ROOT)"/.python ansible ansible-lint ansible-vault
+	touch "$@"
 
 $(ANSIBLE_PRJ)/built/ansible-encryption-key:
 	mkdir -p "$(ANSIBLE_PRJ)/built"
