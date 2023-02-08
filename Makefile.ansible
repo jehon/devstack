@@ -40,6 +40,9 @@ ansible-dump-runtimes:
 	@type ansible-lint | grep "$(ROOT)/"
 	@ansible-lint --version
 
+	@type ansible-playbook | grep "$(ROOT)/"
+	@ansible-playbook --version
+
 .PHONY: ansible-clean
 ansible-clean:
 	rm -fr "$(ANSIBLE_GALAXY)"
