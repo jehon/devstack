@@ -23,7 +23,6 @@ echo "*******************************************************"
 test_in_docker() {
 	IMG="${1:-test-ansible/ansible}:local"
 
-	# See also Dockerfile for ARG REMOTE_PRJ=
 	REMOTE_PRJ="/workspace"
 
 	echo "***    - image: $IMG"
