@@ -14,18 +14,18 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
 		echo "************* Ansible is installed *******************"
 		ansible --version
-		test "$(type -p ansible)" = "/.python/bin/ansible"
-		test "$(type -p ansible-playbook)" = "/.python/bin/ansible-playbook"
+		type -p ansible | grep .python/bin/ansible"
+		type -p ansible-playbook | grep .python/bin/ansible-playbook
 
 		echo "************* Share ansible is mounted *******************"
-		ls ansible.cfg
+		ls ansible/ansible.cfg
 
 		echo "************* Secrets are ok *******************"
-		ls /ansible/inventory/
-		cat /ansible/inventory/00-all_vars.yml
-		! cat /ansible/inventory/00-all_vars.yml | grep -q '!vault'
+		ls ansible/inventory/
+		cat ansible/inventory/00-all_vars.yml
+		! cat ansible/inventory/00-all_vars.yml | grep -q '!vault'
 
-		cat /ansible/conf/ansible-key
-		! cat /ansible/conf/ansible-key | grep -v "1234"
+		cat ansible/conf/ansible-key
+		! cat ansible/conf/ansible-key | grep -v "1234"
 	EOS
 ) | test_in_docker

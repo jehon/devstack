@@ -23,25 +23,29 @@ echo "*******************************************************"
 test_in_docker() {
 	IMG="${1:-test-ansible/ansible}:local"
 
+	# See also Dockerfile for ENV REMOTE_PRJ=
+	REMOTE_PRJ="/workspace"
+
 	echo "***    - image: $IMG"
 
 	(
-		cat <<-'EOS'
+		cat <<-"EOS"
 			echo "+ pre-script begin"
 			set -o errexit
 			set -o pipefail
 
-			cd /ansible
+			cd /$REMOTE_PRJ
+			make .python/
 		EOS
 		cat -
-		cat <<-'EOS'
+		cat <<-"EOS"
 			set +x
 			echo
 		EOS
 	) | docker run --rm --interactive  \
-			-v "$PRJ_ROOT/ansible:/ansible" \
-			-v "$PRJ_ROOT/tmp/ansible/00-all_vars.yml:/ansible/inventory/00-all_vars.yml" \
-			-v "$PRJ_ROOT/tests/ansible-key:/ansible/conf/ansible-key" \
+			-v "$PRJ_ROOT:$REMOTE_PRJ" \
+			-v "$PRJ_ROOT/tmp/ansible/00-all_vars.yml:$REMOTE_PRJ/ansible/inventory/00-all_vars.yml" \
+			-v "$PRJ_ROOT/tests/ansible-key:$REMOTE_PRJ/ansible/conf/ansible-key" \
 			"$IMG" "bash" \
 		|& $PRJ_ROOT/build/tag "inside" \
 		|| fatal "!! Test failed: $TEST_NAME ($?) !!"
