@@ -16,7 +16,7 @@ ANSIBLE_TMP=$(TMP_ROOT)/ansible
 ANSIBLE_PRJ=ansible
 ANSIBLE_ROOT=$(ROOT)/$(ANSIBLE_PRJ)
 ANSIBLE_GALAXY=$(ANSIBLE_ROOT)/.galaxy
-ANSIBLE_TEST_KEY=$(ROOT)/tests/ansible/ansible-test-key
+ANSIBLE_ENCRYPTION_MOCK=$(ROOT)/ansible/ansible-encryption-mock
 
 dump: ansible-dump
 clean: ansible-clean
@@ -31,7 +31,7 @@ ansible-dump:
 	$(call dump_info,ANSIBLE_ROOT)
 	$(call dump_info,ANSIBLE_GALAXY)
 	$(call dump_info,ANSIBLE_TMP)
-	$(call dump_info,ANSIBLE_TEST_KEY)
+	$(call dump_info,ANSIBLE_ENCRYPTION_MOCK)
 
 ansible-dump-runtimes:
 	@echo "* Ansible: "
@@ -83,7 +83,7 @@ $(ANSIBLE_TMP)/.built: .python \
 		$(ANSIBLE_GALAXY)/.done
 
 	@mkdir -p "$(ANSIBLE_TMP)"
-	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_TEST_KEY) build-artifacts.yml
+	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_ENCRYPTION_MOCK) build-artifacts.yml
 	$(call touch,$@)
 
 $(ANSIBLE_GALAXY)/.done: $(ANSIBLE_PRJ)/requirements.yml
