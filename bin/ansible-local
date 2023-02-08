@@ -10,10 +10,16 @@ SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
 
 PRJ_ANSIBLE="$PRJ_ROOT/ansible"
 
-if [ -r /etc/jehon/restricted/ansible-key ]; then
+if [ -r /etc/jehon/restricted/ansible-encryption-key ]; then
     mkdir -p "$PRJ_ANSIBLE/built"
-    ln -sfv /etc/jehon/restricted/ansible-key "$PRJ_ANSIBLE"/built/ansible-key
+    ln -sfv /etc/jehon/restricted/ansible-encryption-key "$PRJ_ANSIBLE"/built/ansible-encryption-key
 fi
 
+cd "$PRJ_ROOT"
+
+echo "Installing dependencies"
+make ansible-dependencies
+
 echo "Starting as sudo"
-cd "$PRJ_ANSIBLE" && sudo PYTHONPATH="$PRJ_ROOT/.python" "$PRJ_ROOT/.python/bin/ansible-playbook" setup.yml --limit dev
+cd ansible
+sudo PYTHONPATH="$PRJ_ROOT/.python" "$PRJ_ROOT/.python/bin/ansible-playbook" setup.yml --limit dev

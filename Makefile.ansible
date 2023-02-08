@@ -11,10 +11,11 @@
 
 ansible: ansible-dump ansible-build ansible-lint
 
-ANSIBLE_TMP=tmp/ansible
+ANSIBLE_TMP=$(TMP_ROOT)/ansible
 
-ANSIBLE_SOURCE=ansible
-ANSIBLE_GALAXY=$(ANSIBLE_SOURCE)/.galaxy
+ANSIBLE_PRJ=ansible
+ANSIBLE_ROOT=$(ROOT)/$(ANSIBLE_PRJ)
+ANSIBLE_GALAXY=$(ANSIBLE_ROOT)/.galaxy
 ANSIBLE_TEST_KEY=$(ROOT)/tests/ansible/ansible-test-key
 
 dump: ansible-dump
@@ -24,11 +25,15 @@ lint: ansible-lint
 test: ansible-test
 
 .PHONY: ansible-dump
-ansible-dump: ansible-dependencies
+ansible-dump:
 	$(call dump_space)
 	$(call dump_title,ANSIBLE)
-	$(call dump_info,ANSIBLE_SOURCE)
+	$(call dump_info,ANSIBLE_ROOT)
 	$(call dump_info,ANSIBLE_GALAXY)
+	$(call dump_info,ANSIBLE_TMP)
+	$(call dump_info,ANSIBLE_TEST_KEY)
+
+ansible-dump-runtimes:
 	@echo "* Ansible: "
 	@type ansible
 	@ansible --version | head -n 1
@@ -47,27 +52,48 @@ ansible-clean:
 .PHONY: ansible-build
 ansible-build: ansible-dependencies
 
-ansible-dependencies: .python/ $(ANSIBLE_TMP)/.built
+.PHONY: ansible-dependencies
+ansible-dependencies: .python/ \
+	$(ANSIBLE_PRJ)/built/ansible-encryption-key \
+	$(ANSIBLE_PRJ)/built/ansible-ssh-key \
+	$(ANSIBLE_TMP)/.built
 
 .python/:
-	cd $(ROOT) && $(ROOT)/build/ansible-install.sh
+	cd $(ROOT) && pip install --upgrade --target "$(PRJ_ROOT)"/.python ansible ansible-lint ansible-vault
+
+$(ANSIBLE_PRJ)/built/ansible-encryption-key:
+	mkdir -p "$(ANSIBLE_PRJ)/built"
+	if [ -r /etc/jehon/restricted/ansible-encryption-key ]; then \
+		ln -fs /etc/jehon/restricted/ansible-encryption-key "$(ANSIBLE_ROOT)/built/ansible-encryption-key"; \
+	else \
+		echo "1234" > "$(PRJ_ROOT)"/ansible/built/ansible-encryption-key; \
+	fi
+
+$(ANSIBLE_PRJ)/built/ansible-ssh-key:
+	if [ -r /etc/jehon/restricted/ansible-ssh-key ]; then \
+		ln -fs /etc/jehon/restricted/ansible-ssh-key "$(ANSIBLE_ROOT)"/ansible/built/ansible-ssh-key; \
+	else \
+		if [ -r $(HOME)/.ssh/id_rsa ]; then \
+			ln -fs $(HOME)/.ssh/id_rsa "$(ANSIBLE_ROOT)"/built/ansible-ssh-key; \
+		fi \
+	fi
 
 $(ANSIBLE_TMP)/.built: .python \
 		$(shell find ansible/ | grep -v .galaxy ) \
 		$(ANSIBLE_GALAXY)/.done
 
 	@mkdir -p "$(ANSIBLE_TMP)"
-	cd ansible && ansible-playbook --vault-password-file $(ANSIBLE_TEST_KEY) build-artifacts.yml
+	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_TEST_KEY) build-artifacts.yml
 	$(call touch,$@)
 
-$(ANSIBLE_GALAXY)/.done: ansible/requirements.yml
+$(ANSIBLE_GALAXY)/.done: $(ANSIBLE_PRJ)/requirements.yml
 	mkdir -p $(ANSIBLE_GALAXY)
-	( cd ansible && ansible-galaxy install --role-file requirements.yml --roles-path .galaxy/ )
+	( cd $(ANSIBLE_PRJ) && ansible-galaxy install --role-file requirements.yml --roles-path .galaxy/ )
 	$(call touch,$@)
 
 .PHONY: ansible-lint
 ansible-lint:
-	cd $(ANSIBLE_SOURCE) && ansible-lint
+	cd $(ANSIBLE_PRJ) && ansible-lint
 	@echo "$@ ok"
 
 ansible-test: tests/ansible/built/.docker \
@@ -76,8 +102,7 @@ ansible-test: tests/ansible/built/.docker \
 	run-parts --exit-on-error --verbose --regex "^[0-9][0-9]-.*" ./tests/ansible/
 
 tests/ansible/built/.docker: \
-		tests/ansible/built/ansible-requirements.sh \
-		tests/ansible/built/ansible-install.sh
+		tests/ansible/built/ansible-requirements.sh
 
 	cd tests/ansible && DOCKER_BUILDKIT=1 docker build --tag "test-ansible/ansible:local" .
 
@@ -86,13 +111,10 @@ tests/ansible/built/.docker: \
 tests/ansible/built/ansible-requirements.sh: .devcontainer/ansible-requirements.sh
 	$(call copy,$@,$<)
 
-tests/ansible/built/ansible-install.sh: build/ansible-install.sh
-	$(call copy,$@,$<)
-
-$(ANSIBLE_TMP)/00-all_vars.yml: ansible/inventory/00-all_vars.yml \
+$(ANSIBLE_TMP)/00-all_vars.yml: $(ANSIBLE_PRJ)/inventory/00-all_vars.yml \
 		node_modules/.built \
 		build/ansible-no-secrets.js
 
 	$(call mkdir,$@)
-	build/ansible-no-secrets.js "ansible/inventory/00-all_vars.yml" "$@"
+	build/ansible-no-secrets.js "$(ANSIBLE_PRJ)/inventory/00-all_vars.yml" "$@"
 	$(call touch,$@)

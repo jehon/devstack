@@ -45,7 +45,7 @@ test_in_docker() {
 	) | docker run --rm --interactive  \
 			-v "$PRJ_ROOT:$REMOTE_PRJ" \
 			-v "$PRJ_ROOT/tmp/ansible/00-all_vars.yml:$REMOTE_PRJ/ansible/inventory/00-all_vars.yml" \
-			-v "$PRJ_ROOT/tests/ansible-key:$REMOTE_PRJ/ansible/conf/ansible-key" \
+			-v "$PRJ_ROOT/tests/ansible-encryption-key:$REMOTE_PRJ/ansible/conf/ansible-encryption-key" \
 			"$IMG" "bash" \
 		|& $PRJ_ROOT/build/tag "inside" \
 		|| fatal "!! Test failed: $TEST_NAME ($?) !!"

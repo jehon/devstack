@@ -40,17 +40,3 @@ ansible-inventory --list
 https://docs.ansible.com/ansible/latest/user_guide/vault.html#encrypting-individual-variables-with-ansible-vault
 
 ansible-vault encrypt_string "$SECRET" --name "$KEY"
-
-
-## Install
-
-#
-# pip:
-#   install goes to /usr/local/bin
-#
-#   - netaddr: for ipaddr filters
-#
-apt install --yes python3-pip
-python3 -m pip install ansible netaddr passlib
-python3 -m pip show ansible \
-ansible --version
