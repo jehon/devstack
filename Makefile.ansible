@@ -97,7 +97,7 @@ $(ANSIBLE_GALAXY)/.done: $(ANSIBLE_PRJ)/requirements.yml
 	$(call touch,$@)
 
 .PHONY: ansible-lint
-ansible-lint:
+ansible-lint: ansible-dependencies
 	cd $(ANSIBLE_PRJ) && ansible-lint
 	@echo "$@ ok"
 
