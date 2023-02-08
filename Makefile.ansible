@@ -34,13 +34,11 @@ ansible-dump:
 	$(call dump_info,ANSIBLE_ENCRYPTION_MOCK)
 
 ansible-dump-runtimes:
-	@echo "* Ansible: "
-	@type ansible
-	@ansible --version | head -n 1
+	@type ansible | grep "$(ROOT)/"
+	@ansible --version
 
-	@echo "* Ansible-lint:"
-	@type ansible-lint
-	@ansible-lint --version | head -n 1
+	@type ansible-lint | grep "$(ROOT)/"
+	@ansible-lint --version
 
 .PHONY: ansible-clean
 ansible-clean:
@@ -63,18 +61,22 @@ ansible-dependencies: .python/ \
 
 $(ANSIBLE_PRJ)/built/ansible-encryption-key:
 	mkdir -p "$(ANSIBLE_PRJ)/built"
-	if [ -r /etc/jehon/restricted/ansible-encryption-key ]; then \
-		ln -fs /etc/jehon/restricted/ansible-encryption-key "$(ANSIBLE_ROOT)/built/ansible-encryption-key"; \
-	else \
-		echo "1234" > "$(PRJ_ROOT)"/ansible/built/ansible-encryption-key; \
+	if [ ! -r "$@" ]; then \
+		if [ -r /etc/jehon/restricted/ansible-encryption-key ]; then \
+			ln -fs /etc/jehon/restricted/ansible-encryption-key "$(ANSIBLE_PRJ)/built/ansible-encryption-key"; \
+		else \
+			echo "12345" > $(ANSIBLE_PRJ)/built/ansible-encryption-key; \
+		fi \
 	fi
 
 $(ANSIBLE_PRJ)/built/ansible-ssh-key:
-	if [ -r /etc/jehon/restricted/ansible-ssh-key ]; then \
-		ln -fs /etc/jehon/restricted/ansible-ssh-key "$(ANSIBLE_ROOT)"/ansible/built/ansible-ssh-key; \
-	else \
-		if [ -r $(HOME)/.ssh/id_rsa ]; then \
-			ln -fs $(HOME)/.ssh/id_rsa "$(ANSIBLE_ROOT)"/built/ansible-ssh-key; \
+	if [ ! -r "$@" ]; then \
+		if [ -r /etc/jehon/restricted/ansible-ssh-key ]; then \
+			ln -fs /etc/jehon/restricted/ansible-ssh-key "$(ANSIBLE_ROOT)"/ansible/built/ansible-ssh-key; \
+		else \
+			if [ -r $(HOME)/.ssh/id_rsa ]; then \
+				ln -fs $(HOME)/.ssh/id_rsa "$(ANSIBLE_ROOT)"/built/ansible-ssh-key; \
+			fi \
 		fi \
 	fi
 

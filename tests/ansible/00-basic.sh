@@ -11,11 +11,11 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
 (
 	cat <<-'EOS'
+		echo "************* Dump *******************"
+		make dump
 
 		echo "************* Ansible is installed *******************"
-		ansible --version
-		type -p ansible | grep .python/bin/ansible"
-		type -p ansible-playbook | grep .python/bin/ansible-playbook
+		make ansible-dump-runtimes
 
 		echo "************* Share ansible is mounted *******************"
 		ls ansible/ansible.cfg
