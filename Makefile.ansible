@@ -57,7 +57,7 @@ ansible-build: ansible-dependencies
 ansible-dependencies: .python/.built \
 	$(ANSIBLE_PRJ)/built/ansible-encryption-key \
 	$(ANSIBLE_PRJ)/built/ansible-ssh-key \
-	$(ANSIBLE_TMP)/.built
+.	$(ANSIBLE_TMP)/.built
 
 .python/.built:
 	cd $(ROOT) && pip install --upgrade --target "$(PRJ_ROOT)"/.python ansible ansible-lint ansible-vault
@@ -84,7 +84,7 @@ $(ANSIBLE_PRJ)/built/ansible-ssh-key:
 		fi \
 	fi
 
-$(ANSIBLE_TMP)/.built: .python \
+$(ANSIBLE_TMP)/.built: .python/.built \
 		$(shell find ansible/ | grep -v .galaxy ) \
 		$(ANSIBLE_GALAXY)/.done
 
