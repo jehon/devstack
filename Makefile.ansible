@@ -57,7 +57,7 @@ ansible-build: ansible-dependencies
 ansible-dependencies: .python/.built \
 	$(ANSIBLE_PRJ)/built/ansible-encryption-key \
 	$(ANSIBLE_PRJ)/built/ansible-ssh-key \
-.	$(ANSIBLE_TMP)/.built
+	$(ANSIBLE_TMP)/.built
 
 .python/.built:
 # pytest: ansible-lint
