@@ -33,6 +33,9 @@ test_in_docker() {
 			set -o errexit
 			set -o pipefail
 
+			export PATH="$REMOTE_PRJ/.python/bin:\$PATH"
+			export PYTHONPATH="$REMOTE_PRJ/.python:\$PYTHONPATH"
+
 			cd $REMOTE_PRJ
 			make ansible-dependencies
 		EOS
