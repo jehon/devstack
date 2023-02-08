@@ -1,10 +1,12 @@
 ---
 
-- hosts: all
+- name: Dump variables
+  hosts: all
 #  gather_facts: false
 
   tasks:
-    - debug:
+    - name: Debug jehon
+      debug:
         var: jehon
 
     # - name: Display all variables/facts known for a host {{ inventory_hostname }}

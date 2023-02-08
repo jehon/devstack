@@ -2,7 +2,8 @@
 
 # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
 
-- hosts: all
+- name: Upgrade all systems
+  hosts: all
   gather_facts: false
   tasks:
     - name: Update packages
@@ -50,3 +51,5 @@
           ansible.builtin.command: git pull
           args:
             chdir: "{{ item }}"
+          tags:
+            - skip_ansible_lint

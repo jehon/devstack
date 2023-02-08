@@ -5,7 +5,8 @@
 # We need to pass through all this for handlers to run only once
 #
 
-- hosts: all
+- name: Setup systems
+  hosts: all
   tasks:
     - name: Setup jh_jehon_deb
       ansible.builtin.include_role:
@@ -15,17 +16,17 @@
       ansible.builtin.include_role:
         name: jh_common
 
-    - name: setup host dev
+    - name: Setup host dev
       when: inventory_hostname == "dev"
       ansible.builtin.include_role:
         name: host_dev
 
-    - name: setup host kiosk
+    - name: Setup host kiosk
       when: inventory_hostname == "kiosk"
       ansible.builtin.include_role:
         name: host_kiosk
 
-    - name: setup host piscine
+    - name: Setup host piscine
       when: inventory_hostname == "piscine"
       ansible.builtin.include_role:
         name: host_piscine
