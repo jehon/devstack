@@ -60,7 +60,7 @@ ansible-dependencies: .python/.built \
 .	$(ANSIBLE_TMP)/.built
 
 .python/.built:
-	cd $(ROOT) && pip install --upgrade --target "$(PRJ_ROOT)"/.python ansible ansible-lint ansible-vault
+	cd $(ROOT) && pip install --upgrade --target "$(ROOT)"/.python ansible ansible-lint ansible-vault
 	touch "$@"
 
 $(ANSIBLE_PRJ)/built/ansible-encryption-key:
