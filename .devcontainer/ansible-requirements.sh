@@ -14,7 +14,7 @@ apt_install() {
 }
 
 echo "*** Configure python3"
-apt_install python-is-python3 python3 python3-pip python3-netaddr git
+apt_install python-is-python3 python3 python3-pip python3-netaddr git python3-passlib
 
 if type direnv &>/dev/null ; then
     direnv allow "$PRJ_ROOT"/ansible
