@@ -51,13 +51,13 @@ ansible-clean:
 	docker image rm -f $$( docker image ls --filter 'reference=test-ansible/*' --format '{{.Repository}}:{{.Tag}}' ) 2>/dev/null || echo "!! No image to remove"
 
 .PHONY: ansible-build
-ansible-build: ansible-dependencies
+ansible-build: ansible-dependencies \
+	$(ANSIBLE_TMP)/.built
 
 .PHONY: ansible-dependencies
 ansible-dependencies: .python/.built \
 	$(ANSIBLE_PRJ)/built/ansible-encryption-key \
-	$(ANSIBLE_PRJ)/built/ansible-ssh-key \
-	$(ANSIBLE_TMP)/.built
+	$(ANSIBLE_PRJ)/built/ansible-ssh-key
 
 .python/.built:
 # pytest: ansible-lint
