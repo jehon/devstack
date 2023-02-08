@@ -29,16 +29,16 @@ test_in_docker() {
 	echo "***    - image: $IMG"
 
 	(
-		cat <<-"EOS"
+		cat <<-EOS
 			echo "+ pre-script begin"
 			set -o errexit
 			set -o pipefail
 
 			cd /$REMOTE_PRJ
-			make .python/
+			make ansible-dependencies
 		EOS
 		cat -
-		cat <<-"EOS"
+		cat <<-EOS
 			set +x
 			echo
 		EOS
