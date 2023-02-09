@@ -43,7 +43,7 @@
       - jehon
   register: jh_jehon_deb_jehon
 
-- name: Apt update
+- name: Apt update (post jehon install)
   ansible.builtin.apt:
     update_cache: true
     upgrade: dist
