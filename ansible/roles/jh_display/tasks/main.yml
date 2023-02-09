@@ -3,12 +3,12 @@
 - name: In full machine
   when: jh_is_full_machine
   block:
-    - name: Set systemd target
-      ansible.builtin.include_role:
-        name: jh_systemd_target
-      vars:
-        target: graphical
-
+    # - name: Set systemd target
+    #   ansible.builtin.include_role:
+    #     name: jh_systemd_target
+    #   vars:
+    #     target: graphical
+    #
     - name: Ensure ubuntu-frame is installed
       community.general.snap:
         name: ubuntu-frame
