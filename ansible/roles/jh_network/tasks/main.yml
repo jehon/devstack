@@ -1,26 +1,26 @@
 ---
 
-- name: Wifi
-  when: wifi_ssid | length > 0
-  block:
-    - name: Create folders
-      ansible.builtin.file:
-        path: /etc/hostapd
-        state: directory
-        mode: "0755"
+# - name: Wifi
+#   when: wifi_ssid | length > 0
+#   block:
+#     - name: Create folders
+#       ansible.builtin.file:
+#         path: /etc/hostapd
+#         state: directory
+#         mode: "0755"
 
-    - name: Install networks files (wlan0)
-      ansible.builtin.template:
-        src: jh-network-hostapd-wlan0.conf
-        dest: /etc/hostapd/wlan0.conf
-        owner: root
-        group: root
-        mode: "0644"
+    # - name: Install networks files (wlan0)
+    #   ansible.builtin.template:
+    #     src: jh-network-hostapd-wlan0.conf
+    #     dest: /etc/hostapd/wlan0.conf
+    #     owner: root
+    #     group: root
+    #     mode: "0644"
 
-    - name: Install networks files (bridge-static)
-      ansible.builtin.template:
-        src: jh-network-bridge-static.network
-        dest: /lib/systemd/network/jh-bridge-static.network
-        owner: root
-        group: root
-        mode: "0644"
+    # - name: Install networks files (bridge-static)
+    #   ansible.builtin.template:
+    #     src: jh-network-bridge-static.network
+    #     dest: /lib/systemd/network/jh-bridge-static.network
+    #     owner: root
+    #     group: root
+    #     mode: "0644"
