@@ -11,7 +11,7 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
 (
 	cat <<-'EOS'
-		ansible-playbook setup.yml --connection=local --limit kiosk
+		cd ansible && ansible-playbook setup.yml --connection=local --limit kiosk
 
 		type jh-lib
 

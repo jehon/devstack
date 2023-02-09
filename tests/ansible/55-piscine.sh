@@ -11,6 +11,6 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 
 (
 	cat <<-'EOS'
-		ansible-playbook setup.yml --connection=local --limit piscine
+		cd ansible && ansible-playbook setup.yml --connection=local --limit piscine
 	EOS
 ) | test_in_docker
