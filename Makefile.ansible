@@ -23,6 +23,7 @@ clean: ansible-clean
 build: ansible-build
 lint: ansible-lint
 test: ansible-test
+release: ansible-release
 
 .PHONY: ansible-dump
 ansible-dump:
@@ -46,13 +47,14 @@ ansible-dump-runtimes:
 .PHONY: ansible-clean
 ansible-clean:
 	rm -fr "$(ANSIBLE_GALAXY)"
-	rm -fr "$(TMP_ROOT)/dev-config.json"
+	rm -f "$(PRJ_PUBLISH)/dev-config.json"
 	rm -fr tests/ansible/built
 	docker image rm -f $$( docker image ls --filter 'reference=test-ansible/*' --format '{{.Repository}}:{{.Tag}}' ) 2>/dev/null || echo "!! No image to remove"
 
 .PHONY: ansible-build
 ansible-build: ansible-dependencies \
-	$(ANSIBLE_TMP)/.built
+	$(ANSIBLE_TMP)/.built \
+	$(PRJ_PUBLISH)/dev-config.json
 
 .PHONY: ansible-dependencies
 ansible-dependencies: .python/.built \
@@ -89,6 +91,7 @@ $(ANSIBLE_TMP)/.built: .python/.built \
 		$(shell find ansible/ | grep -v .galaxy | grep -v built) \
 		$(ANSIBLE_GALAXY)/.done
 
+$(PRJ_PUBLISH)/dev-config.json: $(ANSIBLE_TMP)/.built
 	@mkdir -p "$(ANSIBLE_TMP)"
 	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_ENCRYPTION_MOCK) build-artifacts.yml
 	$(call touch,$@)
@@ -125,3 +128,5 @@ $(ANSIBLE_TMP)/00-all_vars.yml: $(ANSIBLE_PRJ)/inventory/00-all_vars.yml \
 	$(call mkdir,$@)
 	build/ansible-no-secrets.js "$(ANSIBLE_PRJ)/inventory/00-all_vars.yml" "$@"
 	$(call touch,$@)
+
+ansible-release: $(PRJ_PUBLISH)/dev-config.json

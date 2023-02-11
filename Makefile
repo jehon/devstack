@@ -20,6 +20,7 @@ LANG=C.UTF-8
 
 ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
 TMP_ROOT = $(ROOT)/tmp
+PRJ_PUBLISH=$(TMP_ROOT)/publish
 
 export PATH := $(ROOT)/.python/bin:$(PATH)
 export PYTHONPATH := $(ROOT)/.python:$(PYTHONPATH)
@@ -71,6 +72,7 @@ dump:
 	$(call dump_info,PWD,$(shell pwd))
 	$(call dump_info,ROOT)
 	$(call dump_info,TMP_ROOT)
+	$(call dump_info,PRJ_PUBLISH)
 	$(call dump_info,PATH)
 	$(call dump_info,PYTHONPATH)
 	$(call dump_space)
