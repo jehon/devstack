@@ -1,0 +1,23 @@
+---
+
+- name: Guess os for jehon-os package
+  when: jehon_os_package is undefined
+  block:        
+    - name: Ensure lsb_module is installed
+      ansible.builtin.apt:
+        state: latest
+        pkg:
+          - lsb-release
+      register: jh_init_lsb_release_installed
+
+    - name: Recalculate ansible_lsb
+      # ansible_lsb depend on lsb-release to be installed
+      when: jh_init_lsb_release_installed.changed
+      ansible.builtin.setup:
+        filter:
+          # What to recalculate ?
+          - ansible_lsb
+
+    - name: Calculate os name from ansible_lsb.id
+      ansible.builtin.set_fact:
+        jehon_os_package: "jehon-os-{{ ansible_lsb.id | lower }}"

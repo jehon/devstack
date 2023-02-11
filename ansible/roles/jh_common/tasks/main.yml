@@ -1,10 +1,5 @@
 ---
 
-- name: Calculate os name from ansible_lsb.id
-  when: jehon_os_package is undefined
-  ansible.builtin.set_fact:
-    jehon_os_package: "jehon-os-{{ ansible_lsb.id | lower }}"
-
 - name: Install ok
   block:
     - name: "Install os package: {{ jehon_os_package }}"
@@ -25,7 +20,7 @@
     - name: Add secrets group
       ansible.builtin.group:
         name: jh_secrets
-        state: present
+        state: presentw
     - name: Create restricted folder
       ansible.builtin.file:
         path: /etc/jehon/restricted/

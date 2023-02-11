@@ -8,6 +8,10 @@
 - name: Setup systems
   hosts: all
   tasks:
+    - name: Initialize
+      ansible.builtin.include_role:
+        name: jh_init
+
     - name: Setup jh_jehon_deb
       ansible.builtin.include_role:
         name: jh_jehon_deb

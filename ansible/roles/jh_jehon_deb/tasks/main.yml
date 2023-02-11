@@ -48,11 +48,3 @@
     update_cache: true
     upgrade: dist
   when: jh_jehon_deb_jehon.changed
-
-- name: Recalculate ansible_lsb
-  # ansible_lsb depend on lsb_release to be installed
-  # and jehon.deb force it to be installed
-  when: ansible_lsb.id is undefined
-  ansible.builtin.setup:
-    filter:
-      - ansible_lsb

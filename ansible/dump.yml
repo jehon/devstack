@@ -5,9 +5,17 @@
 #  gather_facts: false
 
   tasks:
+    - name: Initialize
+      ansible.builtin.include_role:
+        name: jh_init
+
     - name: Debug jehon
       debug:
         var: jehon
+
+    - name: Display all variables/facts known for a host
+      ansible.builtin.debug:
+        var: hostvars[inventory_hostname]
 
     # - name: Display all variables/facts known for a host {{ inventory_hostname }}
     #   ansible.builtin.debug:
