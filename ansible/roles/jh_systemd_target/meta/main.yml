@@ -1,4 +1,4 @@
 ---
 
 dependencies:
-  - role: jh_is_full_machine
+  - role: jh_init

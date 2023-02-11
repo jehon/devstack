@@ -3,21 +3,54 @@
 - name: Guess os for jehon-os package
   when: jehon_os_package is undefined
   block:        
-    - name: Ensure lsb_module is installed
-      ansible.builtin.apt:
-        state: latest
-        pkg:
-          - lsb-release
-      register: jh_init_lsb_release_installed
+    - name: Check that the somefile.conf exists
+      stat:
+        path: /usr/bin/lsb_release
+      register: lsb_exists
 
-    - name: Recalculate ansible_lsb
-      # ansible_lsb depend on lsb-release to be installed
-      when: jh_init_lsb_release_installed.changed
-      ansible.builtin.setup:
-        filter:
-          # What to recalculate ?
-          - ansible_lsb
+    - name: With lsb_release
+      when: not lsb_exists.stat.exists
+      block:
+        - name: Ensure lsb_module is installed
+          ansible.builtin.apt:
+            state:
+              pkg:
+                - lsb-release
+          register: jh_init_lsb_release_installed
+
+        - name: Recalculate ansible_lsb
+          # ansible_lsb depend on lsb-release to be installed
+          when: jh_init_lsb_release_installed.changed
+          ansible.builtin.setup:
+            filter:
+              # What to recalculate ?
+              - ansible_lsb
 
     - name: Calculate os name from ansible_lsb.id
       ansible.builtin.set_fact:
         jehon_os_package: "jehon-os-{{ ansible_lsb.id | lower }}"
+
+- name: Detect if it is a full machine or not
+  when: jh_is_full_machine is undefined
+  block:
+    - name: Populate service facts
+      community.docker.current_container_facts:
+
+    - name: Check that the somefile.conf exists
+      stat:
+        path: /usr/bin/jh-is-full-machine
+      register: jh_is_full_machine_exists
+
+    - name: Is full machine
+      when: jh_is_full_machine_exists.stat.exists
+      block:
+        - name: Detect full machine
+          ansible.builtin.command:
+            cmd: /usr/bin/jh-is-full-machine -q systemd
+          register: jh_is_full_machine
+          failed_when: jh_is_full_machine.rc > 1
+          changed_when: false
+
+        - name: Register
+          ansible.builtin.set_fact:
+            jh_is_full_machine: "{{ jh_is_full_machine.rc == 0 }}"

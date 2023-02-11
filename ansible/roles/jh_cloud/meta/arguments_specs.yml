@@ -2,7 +2,7 @@
 
 dependencies:
   - jh_load_services
-  - jh_is_full_machine
+  - jh_init
 
 argument_specs:
   main:
