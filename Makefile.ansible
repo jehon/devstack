@@ -91,14 +91,19 @@ $(ANSIBLE_TMP)/.built: .python/.built \
 		$(shell find ansible/ | grep -v .galaxy | grep -v built) \
 		$(ANSIBLE_GALAXY)/.done
 
-$(PRJ_PUBLISH)/dev-config.json: $(ANSIBLE_TMP)/.built
-	@mkdir -p "$(ANSIBLE_TMP)"
-	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_ENCRYPTION_MOCK) build-artifacts.yml
-	$(call touch,$@)
-
 $(ANSIBLE_GALAXY)/.done: $(ANSIBLE_PRJ)/requirements.yml
 	mkdir -p $(ANSIBLE_GALAXY)
 	( cd $(ANSIBLE_PRJ) && ansible-galaxy install --role-file requirements.yml --roles-path .galaxy/ )
+	$(call touch,$@)
+
+$(ANSIBLE_TMP)/dev-config.json: $(ANSIBLE_TMP)/.built
+	$(call mkdir,$@)
+	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_ENCRYPTION_MOCK) build-artifacts.yml
+	$(call touch,$@)
+
+$(PRJ_PUBLISH)/dev-config.json: $(ANSIBLE_TMP)/dev-config.json
+	$(call mkdir,$@)
+	cp -f $(ANSIBLE_TMP)/dev-config.json "$@"
 	$(call touch,$@)
 
 .PHONY: ansible-lint
@@ -130,4 +135,3 @@ $(ANSIBLE_TMP)/00-all_vars.yml: $(ANSIBLE_PRJ)/inventory/00-all_vars.yml \
 	$(call touch,$@)
 
 ansible-release: $(PRJ_PUBLISH)/dev-config.json
-	cp $(ANSIBLE_TMP)/dev-config.json $(PRJ_PUBLISH)/dev-config.json
