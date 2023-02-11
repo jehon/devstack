@@ -95,7 +95,7 @@ lint:
 
 .PHONY: release
 release:
-	@true
+	/usr/bin/jh-github-publish-pages "$(PRJ_PUBLISH)" "push"
 
 #
 #
