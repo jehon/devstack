@@ -12,13 +12,15 @@
     - name: Ensure ubuntu-frame is installed
       community.general.snap:
         name: ubuntu-frame
-        state: enabled
+        state: present
+        options:
+          - daemon=true
       notify: jh-display.restart
 
-    - name: Ensure snap {{ display_snap }} is installed
+    - name: "Ensure snap {{ display_snap }} is installed"
       community.general.snap:
         name: "{{ display_snap }}"
-        state: enabled
+        state: present
         options:
           - daemon=true
           - devmode=true
