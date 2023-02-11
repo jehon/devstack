@@ -28,6 +28,10 @@ if [ ! -r jenkins/built/secrets/master.key ]; then
     cp -f /etc/jehon/restricted/jenkins-master.key jenkins/built/secrets/master.key
 fi
 
+make tmp/ansible/dev-config.json
+mkdir -p httpd/devstack
+cp -fv tmp/ansible/dev-config.json httpd/devstack
+
 OPTS=( )
 case "$1" in
     "-f" )
@@ -38,6 +42,8 @@ case "$1" in
     "-d" )
         OPTS+="-d"
         ;;
+    "-t" )
+        exit 0
 esac
 
 runDockerCompose up --remove-orphans "${OPTS[@]}"
