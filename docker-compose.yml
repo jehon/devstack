@@ -33,8 +33,6 @@ services:
     static:
         image: httpd:alpine
         restart: always
-        depends_on:
-            proxy:
         expose: 
             - 80
         volumes:
@@ -46,8 +44,6 @@ services:
         # https://github.com/maildev/maildev
         image: maildev/maildev
         restart: always
-        depends_on:
-            proxy:
         environment:
             # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
             - MAILDEV_WEB_PORT=1080
@@ -63,8 +59,6 @@ services:
     portainer:
         image: portainer/portainer-ce:latest
         restart: always
-        depends_on:
-            proxy:
         # Need to escape all '$' into '$$'
         command: --admin-password='$$2y$$05$$s5BtawHyEHa1fYr9gfeYNOZd8/JAPeAUVfmFlvjGJpNVasmbulNEe'
         privileged: true
@@ -85,8 +79,6 @@ services:
             context: jenkins
             dockerfile: Dockerfile
         restart: always
-        depends_on:
-            proxy:
         command: --prefix=/jenkins
         expose:
             - 8080
@@ -127,8 +119,6 @@ services:
     sonar:
         profiles: [ "manual" ]
         image: sonarqube:community
-        depends_on:
-            proxy:
         volumes:
             - sonar_data:/opt/sonarqube/data
             - sonar_extensions:/opt/sonarqube/extensions
