@@ -130,3 +130,4 @@ $(ANSIBLE_TMP)/00-all_vars.yml: $(ANSIBLE_PRJ)/inventory/00-all_vars.yml \
 	$(call touch,$@)
 
 ansible-release: $(PRJ_PUBLISH)/dev-config.json
+	cp $(ANSIBLE_TMP)/dev-config.json $(PRJ_PUBLISH)/dev-config.json
