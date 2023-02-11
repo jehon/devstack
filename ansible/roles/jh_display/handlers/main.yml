@@ -1,5 +1,6 @@
 ---
 
 - name: Do jh_display.restart
-  ansible.builtin.command: snap restart {{ display_snap | quote }}
   when: jh_is_full_machine
+  listen: jh-display.restart
+  ansible.builtin.command: snap restart {{ display_snap | quote }}
