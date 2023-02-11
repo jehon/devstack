@@ -20,7 +20,7 @@
     - name: Add secrets group
       ansible.builtin.group:
         name: jh_secrets
-        state: presentw
+        state: present
     - name: Create restricted folder
       ansible.builtin.file:
         path: /etc/jehon/restricted/
