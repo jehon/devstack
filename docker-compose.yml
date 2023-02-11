@@ -30,7 +30,7 @@ services:
             - traefik.http.routers.dashboard.service=dashboard@internal
             - traefik.http.routers.dashboard.middlewares=jhstriproot@docker
 
-    httpd:
+    static:
         image: httpd:alpine
         restart: always
         depends_on:
@@ -40,7 +40,7 @@ services:
         volumes:
             - ./httpd:/usr/local/apache2/htdocs/:ro
         labels:
-            - traefik.http.routers.httpd.rule=PathPrefix(`/`)
+            - traefik.http.routers.static.rule=PathPrefix(`/`)
 
     mail:
         # https://github.com/maildev/maildev
