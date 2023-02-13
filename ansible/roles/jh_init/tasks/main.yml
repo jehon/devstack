@@ -1,21 +1,21 @@
 ---
 
 - name: Guess os for jehon-os package
-  when: jehon_os_package is undefined
+  when: jehon_os_package is undefined or jehon_os_package | length == 0
   block:
-    - name: Check that lsb_release exists
+    - name: Check that /usr/bin/lsb_release exists
       stat:
         path: /usr/bin/lsb_release
-      register: lsb_exists
+      register: usr_bin_lsb_release_exists
 
     - name: With lsb_release
-      when: not lsb_exists.stat.exists
+      when: not usr_bin_lsb_release_exists.stat.exists
       block:
         - name: Ensure lsb_module is installed
           ansible.builtin.apt:
-            state:
-              pkg:
-                - lsb-release
+            state: present
+            pkg:
+              - lsb-release
           register: jh_init_lsb_release_installed
 
         - name: Recalculate ansible_lsb
