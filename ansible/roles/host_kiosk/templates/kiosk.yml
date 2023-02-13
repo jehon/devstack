@@ -16,10 +16,10 @@ photo-frame:
   folder: /var/cache/jehon/photos/
   sources:
     daily:
-      folder: /mnt/cloud/photos
+      path: /mnt/cloud/photos
       n: 20
     pinned:
-      folder: /mnt/cloud/photos/_Starred
+      path: /mnt/cloud/photos/_Starred
       n: 10
 
 camera:
