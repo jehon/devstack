@@ -31,9 +31,13 @@
       ansible.builtin.set_fact:
         jehon_os_package: "jehon-os-{{ ansible_lsb.id | lower }}"
 
-- name: Fallback jh_os_package
+- name: Fallback jehon_os_package
   ansible.builtin.set_fact:
-    jh_os_package: ""
+    jehon_os_package: ""
+
+- name: What is jehon_os_package?
+  debug:
+    var: jehon_os_package
 
 - name: Detect if it is a full machine or not
   when: jh_is_full_machine is undefined
