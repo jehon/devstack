@@ -18,6 +18,9 @@ echo "*** Test in docker: $TEST_NAME"
 echo "***"
 echo "*******************************************************"
 
+docker kill "test-ansible-$TEST_NAME" &>/dev/null || true
+docker rm -f "test-ansible-$TEST_NAME" &> /dev/null || true
+
 # shellcheck disable=SC2120
 # shellcheck disable=SC2119
 test_in_docker() {
