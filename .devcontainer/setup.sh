@@ -10,6 +10,7 @@ export PRJ_ROOT
 
 mkdir tmp
 curl -fsSL https://jehon.github.io/packages/jehon.deb -o tmp/jehon.deb
+chmod 777 tmp
 apt install --yes ./tmp/jehon.deb
 
 $SWD/ansible-requirements.sh
