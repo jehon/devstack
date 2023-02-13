@@ -18,8 +18,8 @@
     "yaml": "2.2.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.2",
-    "@commitlint/config-conventional": "17.4.2",
+    "@commitlint/cli": "17.4.3",
+    "@commitlint/config-conventional": "17.4.3",
     "husky": "8.0.3"
   },
   "scripts": {
