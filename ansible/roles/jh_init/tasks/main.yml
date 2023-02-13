@@ -16,11 +16,11 @@
             state: present
             pkg:
               - lsb-release
-          register: jh_init_lsb_release_installed
+          register: package_lsb_release_installed
 
         - name: Recalculate ansible_lsb
           # ansible_lsb depend on lsb-release to be installed
-          when: jh_init_lsb_release_installed.changed
+          when: package_lsb_release_installed.changed
           ansible.builtin.setup:
             filter:
               # What to recalculate ?
