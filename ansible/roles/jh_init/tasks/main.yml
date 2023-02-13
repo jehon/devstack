@@ -34,7 +34,7 @@
 - name: Detect if it is a full machine or not
   when: jh_is_full_machine is undefined
   block:
-    - name: Check that the somefile.conf exists
+    - name: Check that jh-is-full-machine exists
       stat:
         path: /usr/bin/jh-is-full-machine
       register: jh_is_full_machine_exists
