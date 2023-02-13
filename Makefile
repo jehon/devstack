@@ -18,12 +18,12 @@ LANG=C.UTF-8
 # .ONESHELL:
 .SECONDEXPANSION:
 
-ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
-TMP_ROOT = $(ROOT)/tmp
+ABS_ROOT = $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))
+TMP_ROOT = tmp
 PRJ_PUBLISH=$(TMP_ROOT)/publish
 
-export PATH := $(ROOT)/.python/bin:$(PATH)
-export PYTHONPATH := $(ROOT)/.python:$(PYTHONPATH)
+export PATH := $(ABS_ROOT)/.python/bin:$(PATH)
+export PYTHONPATH := $(ABS_ROOT)/.python:$(PYTHONPATH)
 
 define mkdir
 	@mkdir -p "$(dir $(1))"

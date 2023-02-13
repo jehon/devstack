@@ -14,9 +14,9 @@ ansible: ansible-dump ansible-build ansible-lint
 ANSIBLE_TMP=$(TMP_ROOT)/ansible
 
 ANSIBLE_PRJ=ansible
-ANSIBLE_ROOT=$(ROOT)/$(ANSIBLE_PRJ)
+ANSIBLE_ROOT=$(ANSIBLE_PRJ)
 ANSIBLE_GALAXY=$(ANSIBLE_ROOT)/.galaxy
-ANSIBLE_ENCRYPTION_MOCK=$(ROOT)/ansible/ansible-encryption-mock
+ANSIBLE_ENCRYPTION_MOCK=ansible/ansible-encryption-mock
 
 dump: ansible-dump
 clean: ansible-clean
@@ -35,13 +35,13 @@ ansible-dump:
 	$(call dump_info,ANSIBLE_ENCRYPTION_MOCK)
 
 ansible-dump-runtimes:
-	@type ansible | grep "$(ROOT)/"
+	@type ansible | grep "$(ABS_ROOT)/"
 	@ansible --version
 
-	@type ansible-lint | grep "$(ROOT)/"
+	@type ansible-lint | grep "$(ABS_ROOT)/"
 	@ansible-lint --version
 
-	@type ansible-playbook | grep "$(ROOT)/"
+	@type ansible-playbook | grep "$(ABS_ROOT)/"
 	@ansible-playbook --version
 
 .PHONY: ansible-clean
@@ -65,7 +65,7 @@ ansible-dependencies: .python/.built \
 
 .python/.built:
 # pytest: ansible-lint
-	cd $(ROOT) && pip install --upgrade --target "$(ROOT)"/.python ansible ansible-lint ansible-vault pytest
+	pip install --upgrade --target "$(ABS_ROOT)"/.python ansible ansible-lint ansible-vault pytest
 	touch "$@"
 
 $(ANSIBLE_PRJ)/built/ansible-encryption-key:
