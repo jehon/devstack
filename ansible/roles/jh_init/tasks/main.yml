@@ -32,13 +32,13 @@
 - name: Detect if it is a full machine or not
   when: jehon_full_machine is undefined
   block:
-    - name: Check that jh-is-full-machine exists
+    - name: Check that /usr/bin/jh-is-full-machine exists
       stat:
         path: /usr/bin/jh-is-full-machine
-      register: jehon_full_machine_exists
+      register: usr_bin_jh_is_full_machine_stats
 
     - name: Is full machine
-      when: jehon_full_machine_exists.stat.exists
+      when: usr_bin_jh_is_full_machine_stats.stat.exists
       block:
         - name: Detect full machine
           ansible.builtin.command:
