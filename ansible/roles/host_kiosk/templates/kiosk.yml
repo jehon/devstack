@@ -13,14 +13,15 @@ server:
     - /mnt/cloud/videos
 
 photo-frame:
-  folder: /var/cache/jehon/photos/
+  quantity: 25
   sources:
     daily:
       path: /mnt/cloud/photos
-      n: 20
+      quantity: 20
     pinned:
       path: /mnt/cloud/photos/_Starred
-      n: 10
+      always-new: true
+      quantity: 5
 
 camera:
   intervalSeconds: 15
