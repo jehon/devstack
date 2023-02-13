@@ -49,9 +49,9 @@ ansible-clean:
 	rm -fr "$(ANSIBLE_GALAXY)"
 	rm -f "$(PRJ_PUBLISH)/dev-config.json"
 	rm -fr tests/ansible/built
-	docker kill $$( docker ps -a | grep "test-ansible" | awk -v i="^$$1.*" '{ if($$2~i) { print$$1 } }' ) 2>/dev/null || echo "!! No container running"
-	docker image rm -f $$( docker image ls --filter 'reference=test-ansible/*' --format '{{.Repository}}:{{.Tag}}' ) 2>/dev/null || echo "!! No image to remove"
-	docker volume rm -f test-ansible-python-cache
+	docker ps | ( grep test-ansible || true ) | awk '{print $$1}' | xargs --no-run-if-empty -- docker kill
+	docker image list --filter 'reference=test-ansible/*' --format '{{.Repository}}:{{.Tag}}' | xargs --no-run-if-empty -- docker image rm -f
+	docker volume list --quiet | ( grep "test-ansible" || true ) | xargs --no-run-if-empty -- docker rm -f 
 
 .PHONY: ansible-build
 ansible-build: ansible-dependencies \
