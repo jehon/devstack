@@ -63,7 +63,7 @@
 
 - name: Fallback jh_is_full_machine
   ansible.builtin.set_fact:
-    jh_is_full_machine: False
+    jh_is_full_machine: false
 
 - name: Is full machine?
   debug:
