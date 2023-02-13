@@ -1,7 +1,7 @@
 ---
 
 - name: Ensure DNS
-  when: jh_is_full_machine
+  when: jehon_full_machine
   block:
     - name: Using resolv.conf.d
       when: /etc/resolvconf/resolv.conf.d/head is file

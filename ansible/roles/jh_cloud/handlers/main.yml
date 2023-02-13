@@ -2,13 +2,13 @@
 
 - name: Do reload daemon
   listen: jh_cloud.remount
-  when: jh_is_full_machine
+  when: jehon_full_machine
   ansible.builtin.systemd:
     daemon_reload: true
 
 - name: Do restart cloud mount
   listen: jh_cloud.remount
-  when: jh_is_full_machine
+  when: jehon_full_machine
   with_items: "{{ mount_list }}"
   ansible.builtin.systemd:
     name: mnt-cloud-{{ item | lower }}.mount

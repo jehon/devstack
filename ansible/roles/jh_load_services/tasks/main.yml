@@ -1,7 +1,7 @@
 ---
 
 - name: In full machine
-  when: jh_is_full_machine
+  when: jehon_full_machine
   block:
     - name: Populate service facts
       ansible.builtin.service_facts:

@@ -39,7 +39,7 @@
   when: display_localhost_port is defined
 
 - name: In full machine
-  when: jh_is_full_machine
+  when: jehon_full_machine
   block:
     - name: Set a hostname to {{ inventory_hostname }}
       ansible.builtin.hostname:

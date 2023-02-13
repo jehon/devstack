@@ -13,7 +13,7 @@
     cmd: npm run build
 
 - name: Restart kiosk
-  when: jh_is_full_machine
+  when: jehon_full_machine
   listen: host_kiosk.restart-kiosk
   ansible.builtin.systemd:
     name: jh-kiosk

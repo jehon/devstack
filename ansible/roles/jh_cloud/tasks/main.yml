@@ -68,7 +68,7 @@
       notify: jh_cloud.remount
 
 - name: Enable cloud mount service
-  when: jh_is_full_machine
+  when: jehon_full_machine
   with_items: "{{ mount_list }}"
   vars:
     start: "{{ (cloud_mount is defined) and (cloud_mount[item] is defined) and (cloud_mount[item] != '') }}"

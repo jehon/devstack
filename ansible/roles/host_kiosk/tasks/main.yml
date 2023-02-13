@@ -32,4 +32,4 @@
     name: jh-kiosk
     enabled: true
     state: started
-  when: jh_is_full_machine
+  when: jehon_full_machine

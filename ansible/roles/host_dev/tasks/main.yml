@@ -18,7 +18,7 @@
           - docker-compose-plugin
 
     - name: Set systemd target
-      when: jh_is_full_machine
+      when: jehon_full_machine
       ansible.builtin.include_role:
         name: jh_systemd_target
       vars:
@@ -64,7 +64,7 @@
         mode: "0755"
 
     - name: Enable photo mount
-      when: jh_is_full_machine
+      when: jehon_full_machine
       ansible.builtin.systemd:
         name: mnt-cloud-photos.mount
         enabled: true

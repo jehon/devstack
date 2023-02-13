@@ -3,7 +3,7 @@
 # Thanks to https://stackoverflow.com/a/72196011/1954789
 
 - name: In full machine
-  when: jh_is_full_machine
+  when: jehon_full_machine
   block:
   - name: Get current systemd default
     ansible.builtin.command: systemctl get-default
