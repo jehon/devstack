@@ -27,15 +27,13 @@
               - ansible_lsb
 
     - name: Calculate os name from ansible_lsb.id
+      when: ansible_lsb.id is defined and ansible_lsb.id | length > 0
       ansible.builtin.set_fact:
         jehon_os_package: "jehon-os-{{ ansible_lsb.id | lower }}"
 
 - name: Detect if it is a full machine or not
   when: jh_is_full_machine is undefined
   block:
-    - name: Populate service facts
-      community.docker.current_container_facts:
-
     - name: Check that the somefile.conf exists
       stat:
         path: /usr/bin/jh-is-full-machine
@@ -47,10 +45,14 @@
         - name: Detect full machine
           ansible.builtin.command:
             cmd: /usr/bin/jh-is-full-machine -q systemd
-          register: jh_is_full_machine
-          failed_when: jh_is_full_machine.rc > 1
+          register: jh_is_full_machine_exec
+          failed_when: jh_is_full_machine_exec.rc > 1
           changed_when: false
 
         - name: Register
           ansible.builtin.set_fact:
-            jh_is_full_machine: "{{ jh_is_full_machine.rc == 0 }}"
+            jh_is_full_machine: "{{ jh_is_full_machine_exec.rc == 0 }}"
+
+- name: Is full machine?
+  debug:
+    var: jh_is_full_machine
