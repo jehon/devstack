@@ -3,7 +3,7 @@
 - name: Guess os for jehon-os package
   when: jehon_os_package is undefined
   block:
-    - name: Check that the somefile.conf exists
+    - name: Check that lsb_release exists
       stat:
         path: /usr/bin/lsb_release
       register: lsb_exists
