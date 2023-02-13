@@ -51,7 +51,7 @@ ansible-clean:
 	rm -fr tests/ansible/built
 	docker ps | ( grep test-ansible || true ) | awk '{print $$1}' | xargs --no-run-if-empty -- docker kill
 	docker image list --filter 'reference=test-ansible/*' --format '{{.Repository}}:{{.Tag}}' | xargs --no-run-if-empty -- docker image rm -f
-	docker volume list --quiet | ( grep "test-ansible" || true ) | xargs --no-run-if-empty -- docker rm -f 
+	docker volume list --quiet | ( grep 'test-ansible' || true ) | xargs --no-run-if-empty -- docker rm -f 
 
 .PHONY: ansible-build
 ansible-build: ansible-dependencies \
