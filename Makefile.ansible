@@ -100,7 +100,7 @@ $(ANSIBLE_GALAXY)/.done: $(ANSIBLE_PRJ)/requirements.yml
 
 $(ANSIBLE_TMP)/dev-config.json: $(ANSIBLE_TMP)/.built
 	$(call mkdir,$@)
-	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ANSIBLE_ENCRYPTION_MOCK) build-artifacts.yml
+	cd $(ANSIBLE_PRJ) && ansible-playbook --vault-password-file $(ABS_ROOT)/$(ANSIBLE_ENCRYPTION_MOCK) build-artifacts.yml
 	$(call touch,$@)
 
 $(PRJ_PUBLISH)/dev-config.json: $(ANSIBLE_TMP)/dev-config.json
