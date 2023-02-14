@@ -38,12 +38,14 @@ case "$1" in
         runDockerCompose down
         runDockerCompose rm -f
         OPTS+="--build"
+        shift
         ;;
     "-d" )
         OPTS+="-d"
+        shift
         ;;
     "-t" )
         exit 0
 esac
 
-runDockerCompose up --remove-orphans "${OPTS[@]}"
+runDockerCompose up --remove-orphans "${OPTS[@]}" "$@"
