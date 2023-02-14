@@ -20,7 +20,8 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 		type node
 		type npm
 
-		/usr/bin/jh-kiosk-file-selector -h
+		dpkg -l | grep "jehon-os-raspbian" | grep "ii"
+
 
 		jh-checks | jh-tag-stdin "checks" || true
 	EOS
