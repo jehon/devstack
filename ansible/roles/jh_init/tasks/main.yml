@@ -25,9 +25,9 @@
       ansible.builtin.set_fact:
         jehon_os_package: ""
 
-    - name: What is jehon_os_package?
-      debug:
-        var: jehon_os_package
+- name: What is jehon_os_package?
+  debug:
+    var: jehon_os_package
 
 - name: Detect if it is a full machine or not
   when: jehon_full_machine is undefined
@@ -55,6 +55,6 @@
       ansible.builtin.set_fact:
         jehon_full_machine: false
 
-    - name: Is full machine?
-      debug:
-        var: jehon_full_machine
+- name: Is full machine?
+  debug:
+    var: jehon_full_machine
