@@ -13,15 +13,13 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 	cat <<-'EOS'
 		cd ansible && ansible-playbook setup.yml --connection=local --limit kiosk
 
+		set -x
 		type jh-lib
 
 		id jh-kiosk
 		test -r /opt/jehon/kiosk/package.json
 		type node
 		type npm
-
-		dpkg -l | grep "jehon-os-raspbian" | grep "ii"
-
 
 		jh-checks | jh-tag-stdin "checks" || true
 	EOS
