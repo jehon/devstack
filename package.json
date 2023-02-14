@@ -15,7 +15,10 @@
   "homepage": "https://github.com/jehon/devstack#readme",
   "type": "module",
   "dependencies": {
-    "yaml": "2.2.1"
+    "csv": "6.2.7",
+    "xlsx": "0.18.5",
+    "yaml": "2.2.1",
+    "yargs": "17.6.2"
   },
   "devDependencies": {
     "@commitlint/cli": "17.4.3",
