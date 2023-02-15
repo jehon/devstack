@@ -25,24 +25,26 @@ all:
       hosts:
         kiosk:
           ansible_host: "{{ jehon.ip.kiosk }}"
+          display_localhost_port: 5454
           ip: "{{ jehon.ip.kiosk }}"
-          wifi_ssid: test
-          wifi_channel: 1
-          wifi_wpa_passphrase: test
+          jehon_os_package: jehon-os-raspbian
           synology:
             username: "{{ jehon.credentials.synology.kiosk.username }}"
             password: "{{ jehon.credentials.synology.kiosk.password }}"
-          display_localhost_port: 5454
+          wifi_ssid: test
+          wifi_channel: 1
+          wifi_wpa_passphrase: test
         piscine:
           ansible_host: "{{ jehon.ip.piscine }}"
+          display_localhost_port: 8800
           ip: "{{ jehon.ip.piscine }}"
-          wifi_ssid: test
-          wifi_channel: 6
-          wifi_wpa_passphrase: test
+          jehon_os_package: jehon-os-raspbian
           synology:
             username: "{{ jehon.credentials.synology.piscine.username }}"
             password: "{{ jehon.credentials.synology.piscine.password }}"
-          display_localhost_port: 8800
+          wifi_ssid: test
+          wifi_channel: 6
+          wifi_wpa_passphrase: test
   hosts:
     localhost:
       ansible_connection: local
