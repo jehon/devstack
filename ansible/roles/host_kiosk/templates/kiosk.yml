@@ -1,16 +1,6 @@
 ---
 core:
-#  port: 5454
-#  human:
-#    inactivitySeconds: 60
-
-server:
-  debugPorts: true
-  path:
-    var: /tmp/
-  expose:
-    - /var/cache/jehon/photos
-    - /mnt/cloud/videos
+  port: 5454
 
 photo-frame:
   quantity: 25
@@ -61,4 +51,4 @@ fire:
   cron: "0 19 * 1-2,11-12 *"
   duration: 150
   type: "video/mp4"
-  url: "/mnt/cloud/videos/Fire/fire.720.mp4"
+  path: "/mnt/cloud/videos/Fire/fire.720.mp4"
