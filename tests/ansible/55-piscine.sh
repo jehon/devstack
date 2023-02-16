@@ -12,5 +12,7 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 (
 	cat <<-'EOS'
 		cd ansible && ansible-playbook setup.yml --connection=local --limit piscine
+
+		dpkg -l | grep "jehon-os-raspbian"
 	EOS
 ) | test_in_docker
