@@ -21,3 +21,6 @@ make --directory "$PRJ_ROOT" ansible-dependencies
 echo "Starting as sudo"
 cd "$PRJ_ANSIBLE"
 sudo PYTHONPATH="$PRJ_ROOT/.python" "$PRJ_ROOT/.python/bin/ansible-playbook" setup.yml --limit dev
+
+sudo PYTHONPATH="$PRJ_ROOT/.python" "$PRJ_ROOT/.python/bin/ansible-playbook" upgrade.yml --limit dev
+
