@@ -3,16 +3,12 @@
 - name: Install packages (fuse)
   when: cloud_type | length > 0
   ansible.builtin.apt:
-    force_apt_get: true
-    state: latest
     name:
       - fuse
 
 - name: Install packages (rclone)
   when: cloud_type | length > 0
   ansible.builtin.apt:
-    force_apt_get: true
-    state: latest
     name:
       - rclone
 

@@ -5,7 +5,6 @@
   block:
     - name: Ensure lsb_module is installed
       ansible.builtin.apt:
-        state: present
         pkg:
           - lsb-release
 

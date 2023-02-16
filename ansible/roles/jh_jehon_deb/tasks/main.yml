@@ -32,13 +32,11 @@
 - name: Apt update
   ansible.builtin.apt:
     update_cache: true
-    upgrade: dist
   when: jh_jehon_deb_repo_online.changed or jh_jehon_deb_repo_local.changed
 
 # We need this one to be installed first, because next line will depend on it
 - name: Ensure package jehon is present
   ansible.builtin.apt:
-    state: latest
     pkg:
       - jehon
   register: jh_jehon_deb_jehon
@@ -46,5 +44,4 @@
 - name: Apt update (post jehon install)
   ansible.builtin.apt:
     update_cache: true
-    upgrade: dist
   when: jh_jehon_deb_jehon.changed

@@ -5,7 +5,6 @@
     - name: "Install os package: {{ jehon_os_package }}"
       when: jehon_os_package | length > 0
       ansible.builtin.apt:
-        state: latest
         pkg:
           - "{{ jehon_os_package }}"
       register: jh_os_installed
