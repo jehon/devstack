@@ -20,7 +20,6 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 		set -x
 		type jh-lib
 
-		id jh-kiosk
 		test -r /opt/jehon/kiosk/package.json
 		type node
 		type npm
@@ -28,7 +27,7 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 		dpkg -l | grep "jehon-os-raspbian"
 
 		/etc/cron.daily/jh-kiosk-daily /opt/jehon/kiosk/tests/kiosk.yml
-		
+
 		jh-checks | jh-tag-stdin "checks" || true
 	EOS
 ) | test_in_docker
