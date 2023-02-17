@@ -13,6 +13,12 @@ photo-frame:
       always-new: true
       quantity: 5
 
+fire:
+  cron: "0 19 * 1-2,11-12 *"
+  duration: 150
+  type: "video/mp4"
+  path: "/mnt/cloud/videos/Fire/fire.720.mp4"
+
 camera:
   intervalSeconds: 15
   nbCheck: 2
@@ -46,9 +52,3 @@ menu:
     label: "Système"
     url: "http://localhost:53466/cgi-bin/checks"
     icon: "https://upload.wikimedia.org/wikipedia/commons/8/86/Utilities-system-monitor.svg"
-
-fire:
-  cron: "0 19 * 1-2,11-12 *"
-  duration: 150
-  type: "video/mp4"
-  path: "/mnt/cloud/videos/Fire/fire.720.mp4"
