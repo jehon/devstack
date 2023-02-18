@@ -9,7 +9,7 @@
           - "{{ jehon_os_package }}"
       register: jh_os_installed
 
-    - name: Refresh indexes
+    - name: Refresh indexes for OS
       when: jh_os_installed.changed
       ansible.builtin.apt:
         update_cache: true
