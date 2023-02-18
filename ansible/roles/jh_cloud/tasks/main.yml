@@ -10,7 +10,7 @@
   when: cloud_type | length > 0
   ansible.builtin.apt:
     name:
-      - rclone
+      - rclone>=1.6
 
 - name: "Config file"
   block:
