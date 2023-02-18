@@ -1,6 +1,6 @@
 ---
 
-- name: Install ok
+- name: Install OS
   block:
     - name: "Install os package: {{ jehon_os_package }}"
       when: jehon_os_package | length > 0
