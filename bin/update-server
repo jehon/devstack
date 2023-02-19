@@ -15,10 +15,9 @@ run() {
     header_end
 }
 
-run "apt update" 
+run "apt update"
 run "dpkg --configure -a"
 run "DEBIAN_FRONTEND=noninteractive apt install --fix-missing --yes"
 run "DEBIAN_FRONTEND=noninteractive apt full-upgrade --yes"
 
-
-ok "Done" 
+ok "Done"
