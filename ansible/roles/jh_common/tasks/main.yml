@@ -1,5 +1,19 @@
 ---
 
+- name: Install hardware
+  when: jehon_hardware is defined and jehon_hardware | length > 0
+  block:
+    - name: Install hardware package
+      ansible.builtin.apt:
+        pkg:
+          - "jehon-hardware-{{ jehon_hardware }}"
+      register: jh_common_hardware_installed
+
+    - name: Refresh indexes for hardware
+      when: jh_common_hardware_installed.changed
+      ansible.builtin.apt:
+        update_cache: true
+
 - name: Install OS
   block:
     - name: "Install os package: {{ jehon_os_package }}"

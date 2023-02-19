@@ -27,7 +27,7 @@ all:
           ansible_host: "{{ jehon.ip.kiosk }}"
           display_localhost_port: 5454
           ip: "{{ jehon.ip.kiosk }}"
-          jehon_os_package: jehon-os-raspbian
+          jehon_hardware: raspberrypi
           synology:
             username: "{{ jehon.credentials.synology.kiosk.username }}"
             password: "{{ jehon.credentials.synology.kiosk.password }}"
@@ -38,7 +38,7 @@ all:
           ansible_host: "{{ jehon.ip.piscine }}"
           display_localhost_port: 8800
           ip: "{{ jehon.ip.piscine }}"
-          jehon_os_package: jehon-os-raspbian
+          jehon_hardware: raspberrypi
           synology:
             username: "{{ jehon.credentials.synology.piscine.username }}"
             password: "{{ jehon.credentials.synology.piscine.password }}"
