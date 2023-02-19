@@ -4,20 +4,21 @@ set -o errexit
 set -o pipefail
 shopt -s nullglob
 
+. jh-lib
+
 SWD="$(dirname "$( realpath "${BASH_SOURCE[0]}")")"
 
 HOST="${1:?Need host as [1]}"
+run() {
+    header_begin "Run: $1"
+    ssh "$HOST" "$1"
+    header_end
+}
 
-cat | ssh "$HOST" <<-EOS
-    . jh-lib
+run "apt update" 
+run "dpkg --configure -a"
+run "DEBIAN_FRONTEND=noninteractive apt install --fix-missing --yes"
+run "DEBIAN_FRONTEND=noninteractive apt full-upgrade --yes"
 
-    export DEBIAN_FRONTEND=noninteractive
-    apt update
-
-    dpkg --configure -a || true
-    apt install --fix-missing
-
-    apt full-upgrade -y
-EOS
 
 ok "Done" 
