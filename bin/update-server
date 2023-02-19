@@ -11,12 +11,12 @@ SWD="$(dirname "$( realpath "${BASH_SOURCE[0]}")")"
 HOST="${1:?Need host as [1]}"
 run() {
     header_begin "Run: $1"
-    ssh "$HOST" "$1"
+    ssh "$HOST" "$1" < /dev/null
     header_end
 }
 
-# run "apt update"
-# run "dpkg --configure -a"
+run "apt update"
+run "dpkg --configure -a --yes"
 run "DEBIAN_FRONTEND=noninteractive apt install --fix-broken --fix-missing --yes"
 run "DEBIAN_FRONTEND=noninteractive apt full-upgrade --yes"
 
