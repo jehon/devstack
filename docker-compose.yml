@@ -22,7 +22,7 @@ services:
         labels:
             - traefik.protocol=http
             - traefik.http.middlewares.jhstriproot.stripprefixregex.regex=/[a-zA-Z0-9_-]+/
-            
+
             - traefik.http.routers.api.rule=PathPrefix(`/api`)
             - traefik.http.routers.api.service=api@internal
 
@@ -33,7 +33,7 @@ services:
     static:
         image: httpd:alpine
         restart: always
-        expose: 
+        expose:
             - 80
         volumes:
             - ./httpd:/usr/local/apache2/htdocs/:ro
@@ -55,22 +55,6 @@ services:
             - traefik.http.routers.mail.rule=PathPrefix(`/mail`)
             - traefik.http.routers.mail.middlewares=jhstriproot@docker
             - traefik.http.services.mail.loadbalancer.server.port=1080
-
-    portainer:
-        image: portainer/portainer-ce:latest
-        restart: always
-        # Need to escape all '$' into '$$'
-        command: --admin-password='$$2y$$05$$s5BtawHyEHa1fYr9gfeYNOZd8/JAPeAUVfmFlvjGJpNVasmbulNEe'
-        privileged: true
-        volumes:
-            - /var/run/docker.sock:/var/run/docker.sock
-            - portainer:/data
-        expose:
-            - 9000
-        labels:
-            - traefik.http.routers.portainer.rule=PathPrefix(`/portainer`)
-            - traefik.http.routers.portainer.middlewares=jhstriproot@docker
-            - traefik.http.services.portainer.loadbalancer.server.port=9000
 
     jenkins:
         # Thanks to https://gist.github.com/pythoninthegrass/abb755a54ba908374e1c8bfd79d0c499
@@ -116,24 +100,7 @@ services:
         labels:
             - traefik.enable=false
 
-    sonar:
-        profiles: [ "manual" ]
-        image: sonarqube:community
-        volumes:
-            - sonar_data:/opt/sonarqube/data
-            - sonar_extensions:/opt/sonarqube/extensions
-        environment:
-            SONAR_WEB_CONTEXT: "/sonar"
-            SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: true
-        expose:
-            - 9000
-        labels:
-            - traefik.http.routers.sonar.rule=PathPrefix(`/sonar`)
-
 volumes:
     jenkins_home:
     jenkins_agent_cache:
     jenkins_agent_workdir:
-    portainer:
-    sonar_data:
-    sonar_extensions:
