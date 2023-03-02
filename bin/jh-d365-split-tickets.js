@@ -56,8 +56,9 @@ for(let i = 0; i< initialData.length; i++) {
         for(let i = 0; i < n; i++ ) {
             outputData.push({
                 ...line,
+                Quantité: i == 0 ? line.Quantité : "",
                 splitted: true,
-                splitted_Heures: Math.round(line.Quantité / n * 10) / 10,
+                splitted_Heures: line.Quantité / n,
                 splitted_Ticket: tickets[i]
             });
         }
