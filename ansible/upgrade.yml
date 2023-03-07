@@ -22,11 +22,13 @@
 
         - name: "APT sdtErr"
           when: apt.changed and apt.stderr_lines | length
-          debug: var=apt.stderr_lines
+          ansible.builtin.debug: 
+            var: apt.stderr_lines
 
         - name: "APT sdtOut"
           when: apt.changed and apt.stdout_lines | length
-          debug: var=apt.stdout_lines
+          ansible.builtin.debug: 
+            var: apt.stdout_lines
 
     - name: Update git's
       # when: false
