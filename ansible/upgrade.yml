@@ -30,26 +30,4 @@
 
     - name: Update git's
       # when: false
-      block:
-        - name: Find repos
-          ansible.builtin.find:
-            paths: /opt/jehon/
-            file_type: directory
-            recurse: false
-          register: git_repos_ls
-
-        - name: Get path
-          ansible.builtin.set_fact:
-            git_repos: "{{ git_repos_ls.files | map(attribute='path') }}"
-
-        - name: List repo
-          ansible.builtin.debug:
-            var: git_repos
-
-        - name: Update git
-          loop: "{{ git_repos }}"
-          ansible.builtin.command: git pull
-          args:
-            chdir: "{{ item }}"
-          tags:
-            - skip_ansible_lint
+      ansible.builtin.command: /usr/sbin/jh-git-update
