@@ -8,7 +8,7 @@ set -o errexit
 ARCHIVE="$TMP/synology.tgz"
 
 echo "* Downloading new archive..."
-curl -fsSL "https://jehon.github.io/packages/synology.tgz" --output "$ARCHIVE"
+curl -fsSL "https://jehon.github.io/devstack/synology.tgz" --output "$ARCHIVE"
 echo "* ...downloaded"
 
 echo "* Extracting to $TMP/scripts"
