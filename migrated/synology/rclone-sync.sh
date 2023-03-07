@@ -5,6 +5,8 @@ set -o errexit
 # shellcheck source=SCRIPTDIR/lib.sh
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/lib.sh
 
+SWD="$(dirname "$( realpath "${BASH_SOURCE[0]}")")"
+
 # "$TMP"/rclone/rclone lsd --max-depth 1 pcloud:/
 
 syncOne() {
@@ -32,10 +34,11 @@ syncOne() {
 
 	"$TMP"/rclone/rclone sync \
 		--verbose \
-		pcloud:/"$SOURCE" "$TARGET" \
 		--stats 99d \
-		--track-renames --transfers=1 --max-backlog 200000 \
+		pcloud:/"$SOURCE" "$TARGET" \
 		--exclude "@eaDir" --exclude "@eaDir/**"
+
+	"$SWD"/remove-empty-eadir.sh "$TARGET"
 
 	echo "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
 	echo "vvv Syncing $SOURCE to $TARGET done"
