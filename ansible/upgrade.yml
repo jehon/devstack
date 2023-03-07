@@ -22,12 +22,12 @@
 
         - name: "APT sdtErr"
           when: apt.changed and apt.stderr_lines | length
-          ansible.builtin.debug: 
+          ansible.builtin.debug:
             var: apt.stderr_lines
 
         - name: "APT sdtOut"
           when: apt.changed and apt.stdout_lines | length
-          ansible.builtin.debug: 
+          ansible.builtin.debug:
             var: apt.stdout_lines
 
     - name: Update git's
