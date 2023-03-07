@@ -8,8 +8,7 @@
 # Generate:
 #     x
 #
-
-ansible: ansible-dump ansible-build ansible-lint
+prj-ansible: ansible-dump ansible-build ansible-lint
 
 ANSIBLE_TMP=$(TMP_ROOT)/ansible
 

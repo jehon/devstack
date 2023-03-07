@@ -132,4 +132,6 @@ node_modules/.built: package-lock.json package.json
 #
 # External makefiles
 #
+
 include Makefile.ansible
+include Makefile.synology
