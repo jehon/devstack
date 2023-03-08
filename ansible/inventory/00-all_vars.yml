@@ -98,7 +98,7 @@ all:
 
         synology:
           piscine:
-            jehon_os_package: jehon-os-raspbian
+            jehon_hardware: raspberrypi
             username: systeme-piscine
             password: !vault |
                       $ANSIBLE_VAULT;1.1;AES256
@@ -108,7 +108,7 @@ all:
                       3335346230386461370a353966363632303233313634336534326536376437386665373566396231
                       3161
           kiosk:
-            jehon_os_package: jehon-os-raspbian
+            jehon_hardware: raspberrypi
             username: systeme-kiosk
             password: !vault |
                       $ANSIBLE_VAULT;1.1;AES256

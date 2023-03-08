@@ -22,7 +22,7 @@ SWD="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 		type node
 		type npm
 
-		dpkg -l | grep "jehon-os-raspbian"
+		dpkg -l | grep "jehon-hardware-raspberrypi"
 
 		test -r /opt/jehon/kiosk/package.json
 		/etc/cron.daily/jh-kiosk-daily /opt/jehon/kiosk/tests/kiosk.yml
