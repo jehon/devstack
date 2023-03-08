@@ -10,7 +10,6 @@ dump: synology-dump
 clean: synology-clean
 build: synology-build
 lint: synology-lint
-test: synology-test
 release: synology-release
 
 .PHONY: synology-dump
