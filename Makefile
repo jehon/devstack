@@ -95,6 +95,7 @@ lint:
 
 .PHONY: release
 release:
+	date > "$(PRJ_PUBLISH)"/version.txt
 	/usr/bin/jh-github-publish-pages "$(PRJ_PUBLISH)" "push"
 
 #
