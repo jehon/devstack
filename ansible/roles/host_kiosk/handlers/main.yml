@@ -6,12 +6,6 @@
     chdir: /opt/jehon/kiosk
     cmd: /usr/bin/jh-npm-update-if-necessary
 
-- name: Rebuild kiosk
-  listen: host_kiosk.restart-kiosk
-  ansible.builtin.command:
-    chdir: /opt/jehon/kiosk
-    cmd: npm run build
-
 - name: Restart kiosk
   when: jehon_full_machine
   listen: host_kiosk.restart-kiosk
