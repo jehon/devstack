@@ -32,6 +32,8 @@ services:
 
     static:
         image: httpd:alpine
+        depends_on:
+            - proxy
         restart: always
         expose:
             - 80
@@ -43,6 +45,8 @@ services:
     mail:
         # https://github.com/maildev/maildev
         image: maildev/maildev
+        depends_on:
+            - proxy
         restart: always
         environment:
             # Not working with healthcheck: - MAILDEV_BASE_PATHNAME=/maildev/
@@ -59,6 +63,8 @@ services:
     jenkins:
         # Thanks to https://gist.github.com/pythoninthegrass/abb755a54ba908374e1c8bfd79d0c499
         # Image doc: https://github.com/jenkinsci/docker/blob/master/README.md
+        depends_on:
+            - proxy
         build:
             context: jenkins
             dockerfile: Dockerfile
@@ -86,6 +92,8 @@ services:
         depends_on:
             jenkins:
                 condition: service_healthy
+            proxy:
+                condition: service_started
         restart: always
         build: jenkins-agent
         # privileged: true
