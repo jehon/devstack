@@ -12,8 +12,6 @@ fi
 
 recurse() {
     local found
-
-    echo "In $( pwd )"
     for f in * ; do
         case "$f" in
             "." | ".." )
