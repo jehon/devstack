@@ -5,6 +5,7 @@ set -o pipefail
 
 SWD="$(realpath "$( dirname "${BASH_SOURCE[0]}")")"
 
+# shellcheck source-path=SCRIPTDIR/build/
 . "$SWD/build/lib.sh"
 
 cd "$PRJ_ROOT"
@@ -37,11 +38,11 @@ case "$1" in
     "-f" )
         runDockerCompose down
         runDockerCompose rm -f
-        OPTS+="--build"
+        OPTS+=( "--build" )
         shift
         ;;
     "-d" )
-        OPTS+="-d"
+        OPTS+=( "-d" )
         shift
         ;;
     "-t" )
