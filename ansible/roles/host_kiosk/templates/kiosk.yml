@@ -44,11 +44,10 @@ clock:
     #   duration: 1
 
 menu:
-  Meteo:
-    label: "Météo"
+  - label: "Météo"
     url: "https://www.meteo.be/fr/havelange"
     icon: "http://www.meteo.be/meteo/html/2011/img/weather_klein/300.png"
-  System:
-    label: "Système"
+  
+  - label: "Système"
     url: "http://localhost:53466/cgi-bin/checks"
     icon: "https://upload.wikimedia.org/wikipedia/commons/8/86/Utilities-system-monitor.svg"
