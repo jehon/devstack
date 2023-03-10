@@ -5,7 +5,7 @@ set -o errexit
 # https://docs.ansible.com/ansible/2.8/dev_guide/developing_inventory.html#developing-inventory
 
 if ! type jh-docker-host-ip &> /dev/null; then
-    echo "No jh-docker-host-ip found" >&2
+    echo "Warning: no jh-docker-host-ip found - exiting detecting docker host ip"
     echo "{}"
 	exit 0
 fi
