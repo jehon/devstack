@@ -26,4 +26,3 @@
     - name: Apt update (post jehon install)
       ansible.builtin.apt:
         update_cache: true
-      when: jh_jehon_deb_present.changed
