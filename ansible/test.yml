@@ -1,8 +1,0 @@
----
-
-- name: Reboot systems
-  hosts: servers
-  tasks:
-    - name: Debug
-      debug:
-        msg: Let's test
