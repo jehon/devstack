@@ -1,10 +1,5 @@
 ---
 
-# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_facts_module.html
-- name: Get installed packages
-  ansible.builtin.package_facts:
-    manager: auto
-
 # We need this one to be installed first, because next line will depend on it
 - name: Setup jehon.deb
   when: "'jehon' not in ansible_facts.packages"

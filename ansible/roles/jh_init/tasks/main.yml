@@ -1,5 +1,10 @@
 ---
 
+# https://docs.ansible.com/ansible/latest/collections/ansible/builtin/package_facts_module.html
+- name: Get installed packages
+  ansible.builtin.package_facts:
+    manager: auto
+
 - name: Guess os for jehon-os package
   when: jehon_os_package is undefined or jehon_os_package | length == 0
   block:
