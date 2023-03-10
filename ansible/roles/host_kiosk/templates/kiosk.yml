@@ -1,4 +1,9 @@
 ---
+
+#
+# Ansible config
+#
+
 core:
   port: 5454
 
