@@ -32,4 +32,4 @@
 
     - name: Update git's
       # when: false
-      ansible.builtin.command: /usr/sbin/jh-git-update
+      ansible.builtin.command: /usr/bin/jh-git-update
