@@ -24,14 +24,15 @@ synology-clean:
 	rm -fr "$(SYNOLOGY_TMP)"
 
 .PHONY: synology-build
-synology-build: $(PRJ_PUBLISH)/synology.tgz
+synology-build: $(PRJ_PUBLISH)/synology.tar
 
-$(PRJ_PUBLISH)/synology.tgz: $(SYNOLOGY_ROOT)
+$(PRJ_PUBLISH)/synology.tar: $(SYNOLOGY_ROOT) release-version
 	$(call mkdir,$@)
-	tar -C $(SYNOLOGY_ROOT) -cvzf $@ .
+	tar -v --create --file $@ -C $(SYNOLOGY_ROOT) .
+	tar -v --append --file $@ -C $(PRJ_PUBLISH) version.txt
 
 .PHONY: synology-lint
 synology-lint:
 	@echo "$@ ok"
 
-synology-release: $(PRJ_PUBLISH)/synology.tgz
+synology-release: $(PRJ_PUBLISH)/synology.tar

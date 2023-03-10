@@ -5,7 +5,7 @@ set -o errexit
 # shellcheck source=SCRIPTDIR/lib.sh
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/lib.sh
 
-ARCHIVE="$TMP/synology.tgz"
+ARCHIVE="$TMP/synology.tar"
 
 echo "* Downloading new archive..."
 curl -fsSL "https://jehon.github.io/devstack/synology.tgz" --output "$ARCHIVE"
@@ -14,7 +14,7 @@ echo "* ...downloaded"
 echo "* Extracting to $TMP/scripts"
 rm -fr "$TMP"/scripts
 mkdir "$TMP"/scripts
-tar xvzf "$ARCHIVE" -C "$TMP"/scripts
+tar xvf "$ARCHIVE" -C "$TMP"/scripts
 echo "* ...extracted"
 
 echo "* Moving new scripts in place..."

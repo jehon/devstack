@@ -94,9 +94,13 @@ lint:
 	@true
 
 .PHONY: release
-release:
+release: release-version
+#	/usr/bin/jh-github-publish-pages "$(PRJ_PUBLISH)" "push"
+
+release-version:
+	rm -fr "$(PRJ_PUBLISH)"
+	mkdir -p "$(PRJ_PUBLISH)"
 	date > "$(PRJ_PUBLISH)"/version.txt
-	/usr/bin/jh-github-publish-pages "$(PRJ_PUBLISH)" "push"
 
 #
 #
