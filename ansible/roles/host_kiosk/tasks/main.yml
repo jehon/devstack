@@ -33,3 +33,7 @@
     enabled: true
     state: started
   when: jehon_full_machine
+
+- name: Refresh kiosk (required on first install)
+  ansible.builtin.command:
+    cmd: /etc/cron.daily/jh-kiosk-daily
